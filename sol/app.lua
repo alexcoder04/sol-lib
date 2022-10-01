@@ -1,5 +1,6 @@
 
 App = {
-    name = "SolApp",
-    author = "unknown"
+    name = "undefined",
+    author = "unknown",
+    license = "unknown"
 }
