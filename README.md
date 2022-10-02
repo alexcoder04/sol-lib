@@ -16,6 +16,7 @@ Your code has to be organized, no "throwing everything into one Lua file" anymor
 All the parts are then assembled and built into one `.tns` file by Sol.
 
  - `res` contains any non-code resources, e. g. images and data.
+ - `res/data/menu.yml` is a native nspireOS-menu, written in YAML
  - `components` are re-usable blocks of your GUI which can inherit from base components, written in a custom YAML-based language
  - `init.lua` runs at start
  - `app.lua` is just metadata
@@ -27,6 +28,7 @@ All the parts are then assembled and built into one `.tns` file by Sol.
  | |-img
  | | |-...
  | |-data
+ | | |-menu.yml
  | | |-...
  |-components
  | |-header.scl
@@ -43,7 +45,7 @@ All the parts are then assembled and built into one `.tns` file by Sol.
  - [x] colorful components
  - [x] click events
  - [ ] component focus (tabbing, highlighting selected)
- - [ ] menu api
+ - [x] menu api
  - [ ] about dialog using data from `app.lua`
  - [ ] handling images
  - [ ] handling JSON/YAML data in `res/data`
