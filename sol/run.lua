@@ -1,2 +1,2 @@
 
-timer.start(1)
+timer.start(App.refreshRate)

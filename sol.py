@@ -17,8 +17,10 @@ def append(filename, type_, fo):
     if type_ == "process":
         prefix = project_root
     print(f"#{type_} {filename}")
+    fo.write(f"\n-- BEGIN {type_}:{filename} ")
     with open(f"{prefix}/{filename}", "r") as fi:
         fo.write(fi.read())
+    fo.write(f"-- END {type_}:{filename} ")
 
 def compile_scl(filename, fo):
     print(f"#compile components/{file}")
@@ -29,24 +31,34 @@ def compile_scl(filename, fo):
             f"Components.Custom.{comp_name} = Components.{comp['Inherit']}:new()",
             f"function Components.Custom.{comp_name}:new(o)",
             "  o = o or {}",
+            #f"  o = Components.{comp['Inherit']}:new()",
             "  setmetatable(o, self)",
             "  self.__index = self"
             ]
+        for key in ("Update", "OnClick"):
+            if key not in comp:
+                comp[key] = ""
         for key in comp:
             if key == "Inherit":
                 continue
-            if key == "Update":
-                lua_code.append(f"  function self:Update() {comp['Update']} end")
+            if key in ("Update", "OnClick"):
+                lua_code.append(f"  function self:{key}() {comp[key]} end")
                 continue
             if type(comp[key]) == str:
                 value = f"\"{comp[key]}\""
+            elif type(comp[key]) == bool:
+                value = str(comp[key]).lower()
+            elif type(comp[key]) == list:
+                value = str(comp[key]).replace("[", "{").replace("]", "}")
             else:
                 value = comp[key]
             lua_code.append(f"  self.{key} = {value}")
         lua_code.append("  return o")
         lua_code.append("end")
+    fo.write(f"\n-- BEGIN compile:{filename} ")
     for line in lua_code:
         fo.write(line + "\n")
+    fo.write(f"-- END compile:{filename} ")
 
 if len(sys.argv) < 2:
     die("no argument given")
@@ -55,6 +67,11 @@ project_root = sys.argv[1]
 out = "/tmp/out.lua"
 with open(out, "w") as fo:
     append("app.lua", "include", fo)
+    append("library/_init.lua", "include", fo)
+    for file in os.listdir(f"{LUALIB}/library"):
+        if file == "_init.lua":
+            continue
+        append(f"library/{file}", "include", fo)
     append("components/_init.lua", "include", fo)
     for file in os.listdir(f"{LUALIB}/components"):
         if file == "_init.lua":
