@@ -1,6 +1,6 @@
 
 function on.paint(gc)
-    RootLayout:_draw(gc)
+    App:_draw(gc)
     if Hooks.Paint ~= nil then
         Hooks:Paint(gc)
     end
@@ -22,11 +22,11 @@ function on.construction()
 end
 
 function on.mouseDown(x, y)
-    RootLayout:OnClick(x, y)
+    App:_onClick(x, y)
     platform.window:invalidate()
 end
 
 function on.timer()
-    RootLayout:update()
+    App:_update()
     platform.window:invalidate()
 end

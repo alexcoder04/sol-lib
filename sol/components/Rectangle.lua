@@ -12,12 +12,6 @@ function Components.Base.Rectangle:new(o)
     o = o or {}
     setmetatable(o, self)
     self.__index = self
-    self.PosX = 0
-    self.PosY = 0
-    self.Width = 10
-    self.Height = 10
-    self.Fill = false
-    self.Color = {0, 0, 0}
     return o
 end
 

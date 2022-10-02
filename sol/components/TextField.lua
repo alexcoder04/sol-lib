@@ -3,18 +3,14 @@ Components.Base.TextField = {
     PosX = 0,
     PosY = 0,
     Label = "",
-    Border = false
+    Border = false,
+    Color = {0, 0, 0}
 }
 
 function Components.Base.TextField:new(o)
     o = o or {}
     setmetatable(o, self)
     self.__index = self
-    self.PosX = 0
-    self.PosY = 0
-    self.Label = ""
-    self.Border = false
-    self.Color = {0, 0, 0}
     return o
 end
 

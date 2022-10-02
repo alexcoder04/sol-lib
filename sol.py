@@ -22,7 +22,7 @@ def append(filename: str, type_: str, fo) -> None:
         fo.write(fi.read())
     fo.write(f"-- END {type_}:{filename}")
 
-def compile_scl(filename: str, fo) -> None:
+def compile_component(filename: str, fo) -> (str, list[str], str):
     print(f"#compile components/{file}")
     with open(f"{project_root}/components/{file}", "r") as f:
         comp = yaml.safe_load(f)
@@ -30,8 +30,7 @@ def compile_scl(filename: str, fo) -> None:
         lua_code = [
             f"\nComponents.Custom.{comp_name} = Components.{comp['Inherit']}:new()",
             f"function Components.Custom.{comp_name}:new(o)",
-            "  o = o or {}",
-            #f"  o = Components.{comp['Inherit']}:new()",
+            f"  o = o or Components.{comp['Inherit']}:new(o)",
             "  setmetatable(o, self)",
             "  self.__index = self"
             ]
@@ -55,10 +54,7 @@ def compile_scl(filename: str, fo) -> None:
             lua_code.append(f"  self.{key} = {value}")
         lua_code.append("  return o")
         lua_code.append("end")
-    fo.write(f"\n-- BEGIN compile:{filename}")
-    for line in lua_code:
-        fo.write(line + "\n")
-    fo.write(f"-- END compile:{filename}")
+    return comp_name, lua_code, comp["Inherit"]
 
 def compile_menu(filename: str, fo) -> None:
     with open(filename, "r") as fi:
@@ -105,13 +101,37 @@ with open(out, "w") as fo:
         if file == "_init.lua":
             continue
         append(f"components/{file}", "include", fo)
-    append("layout.lua", "include", fo)
 
-    append("app.lua", "process", fo)
+    components = []
     for file in os.listdir(f"{project_root}/components"):
-        compile_scl(file, fo)
-    append("layout.lua", "process", fo)
+        components.append(compile_component(file, fo))
+    components_sorted = []
+    loop_detector = 0
+    while len(components) > 0:
+        delete = []
+        for c in components:
+            if c[2].startswith("Base."):
+                components_sorted.append(c)
+                delete.append(c)
+                continue
+            if c[2] in [f"Custom.{j[0]}" for j in components_sorted]:
+                components_sorted.append(c)
+                delete.append(c)
+                continue
+        for c in delete:
+            components.remove(c)
+        loop_detector += 1
+        if loop_detector > 99:
+            die("Component inheritance loop deteted")
+    for i in components_sorted:
+        print(f"#sort components/{i[0]}")
+        fo.write(f"\n-- BEGIN compile:components/{i[0]}")
+        for line in i[1]:
+            fo.write(line + "\n")
+        fo.write(f"-- END compile:components/{i[0]}")
+    append("app.lua", "process", fo)
     append("init.lua", "process", fo)
+    append("hooks.lua", "process", fo)
     compile_menu("res/data/menu.yml", fo)
 
     append("events.lua", "include", fo)
