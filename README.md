@@ -31,8 +31,8 @@ All the parts are then assembled and built into one `.tns` file by Sol.
  | | |-menu.yml
  | | |-...
  |-components
- | |-header.scl
- | |-text.scl
+ | |-header.yml
+ | |-text.yml
  | |-...
  |-init.lua
  |-app.lua
@@ -50,7 +50,7 @@ All the parts are then assembled and built into one `.tns` file by Sol.
  - [ ] handling images
  - [ ] handling JSON/YAML data in `res/data`
  - [x] paint hook, use raw `gc` functions
- - [ ] data storage api (using variables)
+ - [x] persistent data storage
  - [ ] game canvas component using nspire physics api
  - [ ] compile-time optimization, deleting unused/empty functions and their calls
  - [ ] message box components imitating nspireOS's UI

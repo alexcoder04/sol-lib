@@ -84,6 +84,39 @@ def compile_menu(filename: str, fo) -> None:
     fo.write(f"\ntoolpalette.register({{{', '.join(categories)}}})")
     fo.write(f"-- END compile:{filename}")
 
+def lua_escape(var, prefix):
+    print(var, type(var))
+    if type(var) == str:
+        return f"\"{var}\""
+    if type(var) == bool:
+        return str(var).lower()
+    if type(var) == list:
+        return str(var).replace("[", "{").replace("]", "}")
+    if type(var) == dict:
+        return pydict_toluatable(var, f"{prefix}")
+    return var
+
+def pydict_toluatable(data: dict, prefix: str) -> str:
+    lines = [f"\n{prefix} = {{}}"]
+    for key in data:
+        res = lua_escape(data[key], prefix)
+        if type(res) == list:
+            for i in res:
+                lines.append(i)
+            continue
+        lines.append(f"\n{prefix}.{key} = {res}")
+    return lines
+
+def compile_data(filename: str, fo) -> None:
+    print(f"#compile res/data/{filename}")
+    with open(f"{project_root}/res/data/{filename}", "r") as fi:
+        data = yaml.safe_load(fi)
+        dname = filename.replace(".yml", "")
+        fo.write(f"\n-- BEGIN compile:{filename}")
+        for line in pydict_toluatable(data, f"App.Data.Const.{dname}"):
+            fo.write(line)
+        fo.write(f"\n-- END compile:{filename}")
+
 if len(sys.argv) < 2:
     die("no argument given")
 project_root = sys.argv[1]
@@ -101,6 +134,11 @@ with open(out, "w") as fo:
         if file == "_init.lua":
             continue
         append(f"components/{file}", "include", fo)
+
+    for file in os.listdir(f"{project_root}/res/data"):
+        if file == "menu.yml":
+            continue
+        compile_data(file, fo)
 
     components = []
     for file in os.listdir(f"{project_root}/components"):
@@ -129,10 +167,10 @@ with open(out, "w") as fo:
         for line in i[1]:
             fo.write(line + "\n")
         fo.write(f"-- END compile:components/{i[0]}")
+
     append("app.lua", "process", fo)
     append("init.lua", "process", fo)
     append("hooks.lua", "process", fo)
     compile_menu("res/data/menu.yml", fo)
 
     append("events.lua", "include", fo)
-    append("run.lua", "include", fo)

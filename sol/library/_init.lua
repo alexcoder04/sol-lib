@@ -1,7 +1,7 @@
 
 Library = {
-    Gui = {},
     Colors = {},
     Debug = {},
+    Gui = {},
     Internal = {}
 }

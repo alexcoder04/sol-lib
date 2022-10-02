@@ -1,4 +1,14 @@
 
+function on.restore(state)
+    App.Data.Var = state
+end
+
+function on.construction()
+    math.randomseed(timer:getMilliSecCounter())
+    timer.start(App.RefreshRate)
+    init()
+end
+
 function on.paint(gc)
     App:_draw(gc)
     if Hooks.Paint ~= nil then
@@ -16,11 +26,6 @@ function on.paint(gc)
     end
 end
 
-function on.construction()
-    math.randomseed(timer:getMilliSecCounter())
-    init()
-end
-
 function on.mouseDown(x, y)
     App:_onClick(x, y)
     platform.window:invalidate()
@@ -29,4 +34,8 @@ end
 function on.timer()
     App:_update()
     platform.window:invalidate()
+end
+
+function on.save()
+    return App.Data.Var
 end
