@@ -1,4 +1,5 @@
 
 Library = {
-    Gui = {}
+    Gui = {},
+    Debug = {}
 }

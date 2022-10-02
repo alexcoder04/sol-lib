@@ -40,16 +40,19 @@ All the parts are then assembled and built into one `.tns` file by Sol.
 ## Roadmap / TODOs
 
  - [ ] more base components (input field, list, sublayouts, tabs)
- - [ ] colorful components
- - [ ] click events
+ - [x] colorful components
+ - [x] click events
  - [ ] component focus (tabbing, highlighting selected)
  - [ ] menu api
  - [ ] about dialog using data from `app.lua`
  - [ ] handling images
  - [ ] handling JSON/YAML data in `res/data`
- - [ ] "raw hooks", allow to inject Lua code into events/on.paint
+ - [x] paint hook, use raw `gc` functions
  - [ ] data storage api (using variables)
  - [ ] game canvas component using nspire physics api
+ - [ ] compile-time optimization, deleting unused/empty functions and their calls
+ - [ ] message box components imitating nspireOS's UI
+ - [ ] 2D-editor component using nspire's built-in editor
 
 ## Naming
 

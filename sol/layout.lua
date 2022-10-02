@@ -9,14 +9,18 @@ end
 
 function RootLayout:update()
     for i = 1, #(self.elements) do
-        self.elements[i]:Update()
+        if self.elements[i].Update ~= nil then
+            self.elements[i]:Update()
+        end
     end
 end
 
 function RootLayout:OnClick(x, y)
     for i = 1, #(self.elements) do
         if self.elements[i]:_touches(x, y) then
-            self.elements[i]:OnClick()
+            if self.elements[i].OnClick ~= nil then
+                self.elements[i]:OnClick()
+            end
         end
     end
 end

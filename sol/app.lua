@@ -6,3 +6,5 @@ App = {
     refreshRate = 10,
     solVersion = 0
 }
+
+Hooks = {}

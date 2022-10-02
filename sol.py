@@ -28,16 +28,13 @@ def compile_scl(filename, fo):
         comp = yaml.safe_load(f)
         comp_name = file.split(".")[0]
         lua_code = [
-            f"Components.Custom.{comp_name} = Components.{comp['Inherit']}:new()",
+            f"\nComponents.Custom.{comp_name} = Components.{comp['Inherit']}:new()",
             f"function Components.Custom.{comp_name}:new(o)",
             "  o = o or {}",
             #f"  o = Components.{comp['Inherit']}:new()",
             "  setmetatable(o, self)",
             "  self.__index = self"
             ]
-        for key in ("Update", "OnClick"):
-            if key not in comp:
-                comp[key] = ""
         for key in comp:
             if key == "Inherit":
                 continue
