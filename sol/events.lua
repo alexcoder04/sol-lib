@@ -5,7 +5,9 @@ function on.paint(gc)
         Hooks:Paint(gc)
     end
     if Library.Debug.Buffer ~= nil then
+        gc:setFont("sansserif", "r", 9)
         gc:drawString(Library.Debug.Buffer, 0, 0, "top")
+        gc:setFont("sansserif", "r", 12)
     end
     if Library.Debug.FlashRedraws then
         gc:setColorRGB(math.random(255), math.random(255), math.random(255))

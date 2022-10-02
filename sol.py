@@ -10,19 +10,19 @@ def die(msg: str = "Something went wrong") -> None:
     print(f"FATAL ERROR: {msg}")
     sys.exit(1)
 
-def append(filename, type_, fo):
+def append(filename: str, type_: str, fo) -> None:
     prefix = "."
     if type_ == "include":
         prefix = LUALIB
     if type_ == "process":
         prefix = project_root
     print(f"#{type_} {filename}")
-    fo.write(f"\n-- BEGIN {type_}:{filename} ")
+    fo.write(f"\n-- BEGIN {type_}:{filename}")
     with open(f"{prefix}/{filename}", "r") as fi:
         fo.write(fi.read())
-    fo.write(f"-- END {type_}:{filename} ")
+    fo.write(f"-- END {type_}:{filename}")
 
-def compile_scl(filename, fo):
+def compile_scl(filename: str, fo) -> None:
     print(f"#compile components/{file}")
     with open(f"{project_root}/components/{file}", "r") as f:
         comp = yaml.safe_load(f)
@@ -41,6 +41,9 @@ def compile_scl(filename, fo):
             if key in ("Update", "OnClick"):
                 lua_code.append(f"  function self:{key}() {comp[key]} end")
                 continue
+            if key == "Color" and type(comp[key]) != list:
+                lua_code.append(f"  self.{key} = {comp[key]}")
+                continue
             if type(comp[key]) == str:
                 value = f"\"{comp[key]}\""
             elif type(comp[key]) == bool:
@@ -52,10 +55,38 @@ def compile_scl(filename, fo):
             lua_code.append(f"  self.{key} = {value}")
         lua_code.append("  return o")
         lua_code.append("end")
-    fo.write(f"\n-- BEGIN compile:{filename} ")
+    fo.write(f"\n-- BEGIN compile:{filename}")
     for line in lua_code:
         fo.write(line + "\n")
-    fo.write(f"-- END compile:{filename} ")
+    fo.write(f"-- END compile:{filename}")
+
+def compile_menu(filename: str, fo) -> None:
+    with open(filename, "r") as fi:
+        menu = yaml.safe_load(fi)
+        menu.append({
+            "Id": "help",
+            "Name": "Help",
+            "Submenues": [
+                {
+                    "Id": "about",
+                    "Name": "About",
+                    "Function": "Library.Internal:ShowAboutDialog()"
+                }
+            ]
+        })
+        categories = []
+        functions = []
+        for cat in menu:
+            submenues = []
+            for sm in cat["Submenues"]:
+                submenues.append(f"{{\"{sm['Name']}\", _menu_{cat['Id']}_{sm['Id']}}}")
+            functions.append(f"function _menu_{cat['Id']}_{sm['Id']}() {sm['Function']} end")
+            categories.append(f"{{\"{cat['Name']}\", {', '.join(submenues)}}}")
+    fo.write(f"\n-- BEGIN compile:{filename}")
+    for i in functions:
+        fo.write("\n" + i)
+    fo.write(f"\ntoolpalette.register({{{', '.join(categories)}}})")
+    fo.write(f"-- END compile:{filename}")
 
 if len(sys.argv) < 2:
     die("no argument given")
@@ -81,6 +112,7 @@ with open(out, "w") as fo:
         compile_scl(file, fo)
     append("layout.lua", "process", fo)
     append("init.lua", "process", fo)
+    compile_menu("res/data/menu.yml", fo)
 
     append("events.lua", "include", fo)
     append("run.lua", "include", fo)
