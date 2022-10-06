@@ -4,7 +4,9 @@ import os
 import sys
 import yaml
 
+# TODO
 LUALIB = "/home/alex/Repos/sol/sol"
+OUT = "/tmp/out.lua"
 
 def die(msg: str = "Something went wrong") -> None:
     print(f"FATAL ERROR: {msg}")
@@ -117,60 +119,68 @@ def compile_data(filename: str, fo) -> None:
             fo.write(line)
         fo.write(f"\n-- END compile:{filename}")
 
-if len(sys.argv) < 2:
-    die("no argument given")
-project_root = sys.argv[1]
+def append_folder(filename: str, type_: str, fo) -> None:
+    append(f"{filename}/_init.lua", type_, fo)
+    for file in os.listdir(filename):
+        if file == "_init.lua": continue
+        append(f"{filename}/{file}", type_, fo)
 
-out = "/tmp/out.lua"
-with open(out, "w") as fo:
-    append("app.lua", "include", fo)
-    append("library/_init.lua", "include", fo)
-    for file in os.listdir(f"{LUALIB}/library"):
-        if file == "_init.lua":
-            continue
-        append(f"library/{file}", "include", fo)
-    append("components/_init.lua", "include", fo)
-    for file in os.listdir(f"{LUALIB}/components"):
-        if file == "_init.lua":
-            continue
-        append(f"components/{file}", "include", fo)
+def process_components(fo) -> None:
+        components = []
+        for file in os.listdir(f"{project_root}/components"):
+            components.append(compile_component(file, fo))
+        components_sorted = []
+        loop_detector = 0
+        while len(components) > 0:
+            delete = []
+            for c in components:
+                if c[2].startswith("Base."):
+                    components_sorted.append(c)
+                    delete.append(c)
+                    continue
+                if c[2] in [f"Custom.{j[0]}" for j in components_sorted]:
+                    components_sorted.append(c)
+                    delete.append(c)
+                    continue
+            for c in delete:
+                components.remove(c)
+            loop_detector += 1
+            if loop_detector > 99:
+                die("Component inheritance loop deteted")
+        for i in components_sorted:
+            print(f"#sort components/{i[0]}")
+            fo.write(f"\n-- BEGIN compile:components/{i[0]}")
+            for line in i[1]:
+                fo.write(line + "\n")
+            fo.write(f"-- END compile:components/{i[0]}")
 
-    for file in os.listdir(f"{project_root}/res/data"):
-        if file == "menu.yml":
-            continue
-        compile_data(file, fo)
+# __MAIN__
+if __name__ == "__main__":
+    if len(sys.argv) < 2:
+        die("no argument given")
+    project_root = sys.argv[1]
 
-    components = []
-    for file in os.listdir(f"{project_root}/components"):
-        components.append(compile_component(file, fo))
-    components_sorted = []
-    loop_detector = 0
-    while len(components) > 0:
-        delete = []
-        for c in components:
-            if c[2].startswith("Base."):
-                components_sorted.append(c)
-                delete.append(c)
+    with open(OUT, "w") as fo:
+        # framework: main file
+        append("app.lua", "include", fo)
+        # framework: library
+        append_folder(f"{LUALIB}/library", "include", fo)
+        # framework: components
+        append_folder(f"{LUALIB}/components", "include", fo)
+
+        # project: data
+        for file in os.listdir(f"{project_root}/res/data"):
+            if file == "menu.yml":
                 continue
-            if c[2] in [f"Custom.{j[0]}" for j in components_sorted]:
-                components_sorted.append(c)
-                delete.append(c)
-                continue
-        for c in delete:
-            components.remove(c)
-        loop_detector += 1
-        if loop_detector > 99:
-            die("Component inheritance loop deteted")
-    for i in components_sorted:
-        print(f"#sort components/{i[0]}")
-        fo.write(f"\n-- BEGIN compile:components/{i[0]}")
-        for line in i[1]:
-            fo.write(line + "\n")
-        fo.write(f"-- END compile:components/{i[0]}")
+            compile_data(file, fo)
 
-    append("app.lua", "process", fo)
-    append("init.lua", "process", fo)
-    append("hooks.lua", "process", fo)
-    compile_menu("res/data/menu.yml", fo)
+        # project: components
+        process_components(fo)
+        # project: lua code
+        for file in ["app.lua", "init.lua", "hooks.lua"]:
+            append(file, "process", fo)
+        # project: menu
+        compile_menu("res/data/menu.yml", fo)
 
-    append("events.lua", "include", fo)
+        # framework: events
+        append("events.lua", "include", fo)
