@@ -5,6 +5,10 @@ GUI application framework for the TI-nspire.
 
 [Here](https://github.com/alexcoder04/sol-helloworld) you can find an example application.
 
+[These](https://github.com/alexcoder04/sol-tools) are the tools needed for developing applications with Sol.
+
+[Here](https://alexcoder04.github.io/sol-docs/) you can find the docs.
+
 ## Why
 
 Building GUI applications for TI-nspire using the stock Lua library from TI
@@ -46,13 +50,9 @@ All the parts are then assembled and built into one `.tns` file by Sol.
  - [x] click events
  - [ ] component focus (tabbing, highlighting selected)
  - [x] menu api
- - [ ] about dialog using data from `app.lua`
- - [ ] handling images
- - [ ] handling JSON/YAML data in `res/data`
  - [x] paint hook, use raw `gc` functions
  - [x] persistent data storage
  - [ ] game canvas component using nspire physics api
- - [ ] compile-time optimization, deleting unused/empty functions and their calls
  - [ ] message box components imitating nspireOS's UI
  - [ ] 2D-editor component using nspire's built-in editor
 
