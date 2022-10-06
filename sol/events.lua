@@ -6,7 +6,9 @@ end
 function on.construction()
     math.randomseed(timer:getMilliSecCounter())
     timer.start(App.RefreshRate)
-    init()
+    if init ~= nil then
+        init()
+    end
 end
 
 function on.paint(gc)
