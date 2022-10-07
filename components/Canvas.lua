@@ -1,4 +1,5 @@
 
+-- TODO relative drawing (x,y -> position on canvas, not globally)
 Components.Base.Canvas = {
     PosX = 0,
     PosY = 0,
