@@ -23,7 +23,7 @@ function Components.Base.Canvas:_touches(x, y)
 end
 
 function Components.Base.Canvas:_draw(gc)
-    gc:setColorRGB(Library.Colors.Royalblue)
+    gc:setColorRGB(Lib.Colors.Royalblue)
     gc:drawRect(self.PosX, self.PosY, self.Width, self.Height)
     self:Draw(gc)
     gc:setColorRGB(0, 0, 0)

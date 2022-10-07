@@ -60,7 +60,7 @@ All the parts are then assembled and built into one `.tns` file by [sol-tools](h
  - [x] persistent data storage
  - [ ] message box components imitating nspireOS's UI
  - [ ] redraw on timer only if one of update functions returns true
- - [ ] rename `Library` to `Lib`
+ - [x] rename `Library` to `Lib`
 
 ## Naming
 

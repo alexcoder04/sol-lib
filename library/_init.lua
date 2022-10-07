@@ -1,5 +1,5 @@
 
-Library = {
+Lib = {
     Colors = {},
     Debug = {},
     Gui = {},

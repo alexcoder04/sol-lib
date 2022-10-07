@@ -16,12 +16,12 @@ function on.paint(gc)
     if Hooks.Paint ~= nil then
         Hooks:Paint(gc)
     end
-    if Library.Debug.Buffer ~= nil then
+    if Lib.Debug.Buffer ~= nil then
         gc:setFont("sansserif", "r", 9)
-        gc:drawString(Library.Debug.Buffer, 0, 0, "top")
+        gc:drawString(Lib.Debug.Buffer, 0, 0, "top")
         gc:setFont("sansserif", "r", 12)
     end
-    if Library.Debug.FlashRedraws then
+    if Lib.Debug.FlashRedraws then
         gc:setColorRGB(math.random(255), math.random(255), math.random(255))
         gc:fillRect(platform.window:width() - 10, 0, 10, 10)
         gc:setColorRGB(0, 0, 0)

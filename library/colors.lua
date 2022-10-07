@@ -2,7 +2,7 @@
 -- A part of BetterLuaAPI by Adriweb was used
 -- see <https://github.com/adriweb/BetterLuaAPI-for-TI-Nspire.git> for more useful functions
 
-Library.Colors = {
+Lib.Colors = {
     Black = { 0, 0, 0 },
     Blue  = { 0, 0, 255 },
     Brown = { 165, 42, 42 },
