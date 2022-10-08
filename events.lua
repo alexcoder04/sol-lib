@@ -34,8 +34,9 @@ function on.mouseDown(x, y)
 end
 
 function on.timer()
-    App:_update()
-    platform.window:invalidate()
+    if App:_update() then
+        platform.window:invalidate()
+    end
 end
 
 function on.save()

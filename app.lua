@@ -17,11 +17,15 @@ function App:AddElement(element)
 end
 
 function App:_update()
+    redraw_required = false
     for i = 1, #(self._elements) do
         if self._elements[i].Update ~= nil then
-            self._elements[i]:Update()
+            if self._elements[i]:Update() then
+                redraw_required = true
+            end
         end
     end
+    return redraw_required
 end
 
 function App:_onClick(x, y)
