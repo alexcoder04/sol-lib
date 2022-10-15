@@ -45,7 +45,7 @@ All the parts are then assembled and built into one `.tns` file by [sol-tools](h
 ## Roadmap / TODOs
 
  - [ ] more base components
-   - [ ] input field
+   - [x] input field
    - [ ] list
    - [ ] sublayouts
    - [ ] tabs

@@ -13,12 +13,14 @@ App = {
     }
 }
 
+Hooks = {}
+
 function App:AddElement(element)
     table.insert(self._elements, element)
 end
 
 function App:_update()
-    redraw_required = false
+    local redraw_required = false
     for i = 1, #(self._elements) do
         if self._elements[i].Update ~= nil then
             if self._elements[i]:Update() then
@@ -53,5 +55,3 @@ function App:_draw(gc)
         end
     end
 end
-
-Hooks = {}

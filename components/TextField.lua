@@ -15,7 +15,7 @@ function Components.Base.TextField:new(o)
 end
 
 function Components.Base.TextField:_touches(x, y)
-    w, h = Lib.Gui:GetStringSize(self.Label)
+    local w, h = Lib.Gui:GetStringSize(self.Label)
     if x >= self.PosX and x <= (self.PosX + w) then
         if y >= self.PosY and y <= (self.PosY + h) then
             return true

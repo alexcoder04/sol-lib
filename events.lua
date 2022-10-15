@@ -39,7 +39,7 @@ function on.enterKey()
 end
 
 function on.tabKey()
-    foc = App._focused + 1
+    local foc = App._focused + 1
     for i = 1, #(App._elements) do
         if foc > #(App._elements) then
             foc = 1
@@ -58,6 +58,32 @@ end
 function on.escapeKey()
     App._focused = 0
     platform.window:invalidate()
+end
+
+function on.charIn(c)
+    if App._focused == 0 then
+        if Hooks.CharIn ~= nil then
+            Hooks:CharIn(c)
+        end
+        return
+    end
+    if App._elements[App._focused].AcceptChar ~= nil then
+        App._elements[App._focused]:AcceptChar(c)
+        platform.window:invalidate()
+    end
+end
+
+function on.backspaceKey()
+    if App._focused == 0 then
+        if Hooks.Backspace ~= nil then
+            Hooks:Backspace()
+        end
+        return
+    end
+    if App._elements[App._focused].AcceptBackspace ~= nil then
+        App._elements[App._focused]:AcceptBackspace()
+        platform.window:invalidate()
+    end
 end
 
 function on.timer()
