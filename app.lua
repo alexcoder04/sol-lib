@@ -1,6 +1,7 @@
 
 App = {
     _elements = {},
+    _focused = 0,
     Name = "undefined",
     Author = "unknown",
     License = "unknown",
@@ -28,7 +29,7 @@ function App:_update()
     return redraw_required
 end
 
-function App:_onClick(x, y)
+function App:_onMouseClick(x, y)
     for i = 1, #(self._elements) do
         if self._elements[i]:_touches(x, y) and (not self._elements[i].Hidden) then
             if self._elements[i].OnClick ~= nil then
@@ -38,10 +39,17 @@ function App:_onClick(x, y)
     end
 end
 
+function App:_onElementClick()
+    if self._focused == 0 then return end
+    if self._elements[self._focused].OnClick ~= nil then
+        self._elements[self._focused]:OnClick()
+    end
+end
+
 function App:_draw(gc)
     for i = 1, #(self._elements) do
         if not self._elements[i].Hidden then
-            self._elements[i]:_draw(gc)
+            self._elements[i]:_draw(gc, self._focused == i)
         end
     end
 end

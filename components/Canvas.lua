@@ -23,11 +23,14 @@ function Components.Base.Canvas:_touches(x, y)
     return false
 end
 
-function Components.Base.Canvas:_draw(gc)
-    gc:setColorRGB(Lib.Colors.Royalblue)
-    gc:drawRect(self.PosX, self.PosY, self.Width, self.Height)
-    self:Draw(gc)
+function Components.Base.Canvas:_draw(gc, focused, focused)
+    gc:setColorRGB(unpack(Lib.Colors.Royalblue))
+    gc:fillRect(self.PosX, self.PosY, self.Width, self.Height)
     gc:setColorRGB(0, 0, 0)
+    self:Draw(gc)
+    if focused then
+        Lib.Gui:DrawFocusBox(self.PosX, self.PosY, self.Width, self.Height, gc)
+    end
 end
 
 function Components.Base.Canvas:Draw(gc)

@@ -24,12 +24,15 @@ function Components.Base.TextField:_touches(x, y)
     return false
 end
 
-function Components.Base.TextField:_draw(gc)
+function Components.Base.TextField:_draw(gc, focused)
     gc:setColorRGB(unpack(self.Color))
     gc:drawString(self.Label, self.PosX, self.PosY, "top")
+    local w, h = Lib.Gui:GetStringSize(self.Label)
     if self.Border then
-        w, h = Lib.Gui:GetStringSize(self.Label)
         gc:drawRect(self.PosX, self.PosY, w, h)
     end
     gc:setColorRGB(0, 0, 0)
+    if focused then
+        Lib.Gui:DrawFocusBox(self.PosX, self.PosY, w, h, gc)
+    end
 end

@@ -54,7 +54,7 @@ All the parts are then assembled and built into one `.tns` file by [sol-tools](h
    - [ ] 2D-editor using nspire's built-in editor
  - [x] colorful components
  - [x] click events
- - [ ] component focus (tabbing, highlighting selected)
+ - [x] component focus (tabbing, highlighting selected)
  - [x] menu api
  - [x] paint hook, use raw `gc` functions
  - [x] persistent data storage

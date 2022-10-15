@@ -29,7 +29,34 @@ function on.paint(gc)
 end
 
 function on.mouseDown(x, y)
-    App:_onClick(x, y)
+    App:_onMouseClick(x, y)
+    platform.window:invalidate()
+end
+
+function on.enterKey()
+    App:_onElementClick()
+    platform.window:invalidate()
+end
+
+function on.tabKey()
+    foc = App._focused + 1
+    for i = 1, #(App._elements) do
+        if foc > #(App._elements) then
+            foc = 1
+        end
+        if not App._elements[foc].Hidden then
+            App._focused = foc
+            platform.window:invalidate()
+            return
+        end
+        foc = foc + 1
+    end
+    App._focused = 0
+    platform.window:invalidate()
+end
+
+function on.escapeKey()
+    App._focused = 0
     platform.window:invalidate()
 end
 

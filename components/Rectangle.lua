@@ -24,7 +24,7 @@ function Components.Base.Rectangle:_touches(x, y)
     return false
 end
 
-function Components.Base.Rectangle:_draw(gc)
+function Components.Base.Rectangle:_draw(gc, focused)
     gc:setColorRGB(unpack(self.Color))
     if self.Fill then
         gc:fillRect(self.PosX, self.PosY, self.Width, self.Height)
@@ -32,4 +32,7 @@ function Components.Base.Rectangle:_draw(gc)
         gc:drawRect(self.PosX, self.PosY, self.Width, self.Height)
     end
     gc:setColorRGB(0, 0, 0)
+    if focused then
+        Lib.Gui:DrawFocusBox(self.PosX, self.PosY, self.Width, self.Height, gc)
+    end
 end
