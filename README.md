@@ -7,6 +7,7 @@ and contains all the Lua library code.
 [Here](https://alexcoder04.github.io/sol-docs/) you can find the docs.
 
 [Here](https://github.com/alexcoder04/sol-helloworld) you can find an example application.
+And [here](https://github.com/alexcoder04/nclock22) is another one.
 
 [These](https://github.com/alexcoder04/sol-tools) are the tools needed for developing applications with Sol.
 
@@ -15,36 +16,22 @@ and contains all the Lua library code.
 Building GUI applications for TI-nspire using the stock Lua library from TI
 is a pain, this is an attempt to make it easier and more comfortable.
 
-## Your project structure
+### Organized
 
 Your code has to be organized, no "throwing everything into one Lua file" anymore!
 All the parts are then assembled and built into one `.tns` file by [sol-tools](https://github.com/alexcoder04/sol-tools).
+These tools are also downloading the required sol-lib Lua library version for you.
 
- - `res` contains any non-code resources, e. g. images and data.
- - `res/data/menu.yml` is a native nspireOS-menu, written in YAML
- - `components` are re-usable blocks of your GUI which can inherit from base components, written in YAML
- - `solproj.yml` is where app metadata goes
  - `init.lua` runs at start
  - `app.lua` is your main file where you define the app logic
- - `hooks.lua` is where you can hook into raw inspired Lua events, like drawing with `gc` inside `on.paint`
+ - `solproj.yml` is where app metadata goes
+ - `components` are re-usable blocks of your GUI which can inherit from base components, written in YAML
+ - `res` contains any non-code resources, e. g. images and data.
+ - and so on...
 
-```text
- |
- |--res
- |  |--img
- |  |  |--...
- |  |--data
- |  |  |--menu.yml
- |  |  |--...
- |--components
- |  |--header.yml
- |  |--text.yml
- |  |--...
- |--solproj.yml
- |--init.lua
- |--app.lua
- |--hooks.lua
-```
+## How to Use
+
+Check out the [Quickstart guide](https://alexcoder04.github.io/sol-docs/quickstart.html).
 
 ## Roadmap / TODOs
 
@@ -66,7 +53,9 @@ All the parts are then assembled and built into one `.tns` file by [sol-tools](h
  - [x] redraw on timer only if one of update functions returns true
  - [x] rename `Library` to `Lib`
  - [ ] schedule to do something at next redraw/update / imitating sleep function
- - [x] colorschemes
+   - [x] do at next update
+   - [ ] do in specific time interval
+ - [x] light/dark mode switching
 
 ## Naming
 

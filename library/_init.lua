@@ -3,5 +3,6 @@ Lib = {
     Colors = {},
     Debug = {},
     Gui = {},
-    Internal = {}
+    Internal = {},
+    Timeout = {}
 }
