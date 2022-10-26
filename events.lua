@@ -1,11 +1,24 @@
 
 function on.restore(state)
-    App.Data.Var = state
+    App.Data.Var = state.data
+    App.Gui.DarkMode = state.darkMode
 end
 
 function on.construction()
     math.randomseed(timer:getMilliSecCounter())
     timer.start(App.RefreshRate)
+    App.Gui.LightColorscheme = {
+        Background = Lib.Colors.White,
+        Foreground = Lib.Colors.Black,
+        Secondary = Lib.Colors.Grey,
+        Accent = Lib.Colors.Blue
+    }
+    App.Gui.DarkColorscheme = {
+        Background = Lib.Colors.Black,
+        Foreground = Lib.Colors.White,
+        Secondary = Lib.Colors.Silver,
+        Accent = Lib.Colors.Blue
+    }
     if init ~= nil then
         init()
     end
@@ -97,5 +110,8 @@ function on.timer()
 end
 
 function on.save()
-    return App.Data.Var
+    return {
+        data = App.Data.Var,
+        darkMode = App.Gui.DarkMode
+    }
 end

@@ -7,7 +7,11 @@ App = {
     License = "unknown",
     RefreshRate = 10,
     SolVersion = 0,
-    Gui = {},
+    Gui = {
+        DarkMode = false,
+        LightColorscheme = {},
+        DarkColorscheme = {}
+    },
     Data = {
         Const = {},
         Var = {}
@@ -50,8 +54,9 @@ function App:_onElementClick()
 end
 
 function App:_draw(gc)
-    if App.Gui.Background ~= nil then
-        gc:setColorRGB(unpack(App.Gui.Background))
+    local bg = Lib.Colors.Background()
+    if bg ~= {255, 255, 255} then
+        gc:setColorRGB(unpack(bg))
         gc:fillRect(0, 0, platform.window:width(), platform.window:height())
         gc:setColorRGB(0, 0, 0)
     end

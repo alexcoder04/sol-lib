@@ -1,4 +1,4 @@
 
-function Lib.Internal:ShowAboutDialog()
+function Lib.Internal.ShowAboutDialog()
     Lib.Debug:Print("About Dialog not implemented yet")
 end

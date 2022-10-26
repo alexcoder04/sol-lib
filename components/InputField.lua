@@ -16,7 +16,7 @@ function Components.Base.InputField:new(o)
 end
 
 function Components.Base.InputField:_touches(x, y)
-    local w, h = Lib.Gui:GetStringSize(self.Value)
+    local w, h = Lib.Gui.GetStringSize(self.Value)
     if x >= self.PosX and x <= (self.PosX + self.Width) then
         if y >= self.PosY and y <= (self.PosY + h) then
             return true
@@ -33,11 +33,11 @@ end
 
 function Components.Base.InputField:_get_draw_text(focused)
     local dt = self.Value
-    local w, h = Lib.Gui:GetStringSize(dt .. self:_get_cursor(focused))
+    local w, h = Lib.Gui.GetStringSize(dt .. self:_get_cursor(focused))
     if w <= self.Width then return dt .. self:_get_cursor(focused) end
     while w > self.Width do
         dt = dt:sub(2)
-        w, h = Lib.Gui:GetStringSize("..." .. dt .. self:_get_cursor(focused))
+        w, h = Lib.Gui.GetStringSize("..." .. dt .. self:_get_cursor(focused))
     end
     return "..." .. dt .. self:_get_cursor(focused)
 end
@@ -45,7 +45,7 @@ end
 function Components.Base.InputField:_draw(gc, focused)
     self._cursor_on = not self._cursor_on
     local dt = self:_get_draw_text(focused)
-    local w, h = Lib.Gui:GetStringSize(dt)
+    local w, h = Lib.Gui.GetStringSize(dt)
     if not focused then
         gc:setColorRGB(unpack(Lib.Colors.Silver))
         gc:fillRect(self.PosX, self.PosY, self.Width, h)
@@ -58,7 +58,7 @@ function Components.Base.InputField:_draw(gc, focused)
     gc:drawRect(self.PosX, self.PosY, self.Width, h)
     gc:setColorRGB(0, 0, 0)
     if focused then
-        Lib.Gui:DrawFocusBox(self.PosX, self.PosY, self.Width, h, gc)
+        Lib.Gui.DrawFocusBox(self.PosX, self.PosY, self.Width, h, gc)
     end
 end
 

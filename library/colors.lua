@@ -33,3 +33,26 @@ Lib.Colors = {
     White = { 255, 255, 255 },
     Yellow = { 255, 255, 0 }
 }
+
+function _get_color_mode()
+    if App.Gui.DarkMode then
+        return "DarkColorscheme"
+    end
+    return "LightColorscheme"
+end
+
+function Lib.Colors.Background()
+    return App.Gui[_get_color_mode()].Background
+end
+
+function Lib.Colors.Foreground()
+    return App.Gui[_get_color_mode()].Foreground
+end
+
+function Lib.Colors.Secondary()
+    return App.Gui[_get_color_mode()].Secondary
+end
+
+function Lib.Colors.Accent()
+    return App.Gui[_get_color_mode()].Accent
+end

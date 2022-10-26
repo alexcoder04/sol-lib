@@ -29,7 +29,7 @@ function Components.Base.Canvas:_draw(gc, focused)
     gc:setColorRGB(0, 0, 0)
     self:Draw(gc)
     if focused then
-        Lib.Gui:DrawFocusBox(self.PosX, self.PosY, self.Width, self.Height, gc)
+        Lib.Gui.DrawFocusBox(self.PosX, self.PosY, self.Width, self.Height, gc)
     end
 end
 

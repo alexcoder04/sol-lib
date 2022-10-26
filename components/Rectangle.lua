@@ -33,6 +33,6 @@ function Components.Base.Rectangle:_draw(gc, focused)
     end
     gc:setColorRGB(0, 0, 0)
     if focused then
-        Lib.Gui:DrawFocusBox(self.PosX, self.PosY, self.Width, self.Height, gc)
+        Lib.Gui.DrawFocusBox(self.PosX, self.PosY, self.Width, self.Height, gc)
     end
 end
