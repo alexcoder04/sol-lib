@@ -51,7 +51,7 @@ All the parts are then assembled and built into one `.tns` file by [sol-tools](h
  - [ ] more base components
    - [x] input field
    - [ ] list
-   - [ ] sublayouts
+   - [ ] sublayouts/containers
    - [ ] tabs
    - [ ] console
    - [ ] game canvas using physics api
@@ -66,8 +66,7 @@ All the parts are then assembled and built into one `.tns` file by [sol-tools](h
  - [x] redraw on timer only if one of update functions returns true
  - [x] rename `Library` to `Lib`
  - [ ] schedule to do something at next redraw/update / imitating sleep function
- - [ ] focusable and unfocusable components
- - [ ] colorschemes
+ - [x] colorschemes
 
 ## Naming
 
