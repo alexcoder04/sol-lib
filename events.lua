@@ -104,9 +104,9 @@ function on.backspaceKey()
 end
 
 function on.timer()
-    if Lib.Timeout._next ~= nil then
-        Lib.Timeout._next()
-        Lib.Timeout._next = nil
+    if Lib.Timeout.Next ~= nil then
+        Lib.Timeout.Next()
+        Lib.Timeout.Next = nil
     end
     if App:_update() then
         platform.window:invalidate()
