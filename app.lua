@@ -2,9 +2,10 @@
 App = {
     _elements = {},
     _focused = 0,
-    Name = "undefined",
+    Name = "sol-app",
     Author = "unknown",
     License = "unknown",
+    Homepage = "unknown",
     RefreshRate = 10,
     SolVersion = 0,
     Gui = {

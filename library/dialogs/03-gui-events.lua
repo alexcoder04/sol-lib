@@ -4,7 +4,7 @@ function gui.mouseDown(xPos,yPos)
   local window=gui.current()
   if window.size then
    local sizeX,sizeY=unpack(window.size)
-   local x,y=(width()-sizeX)/2,(height()-sizeY-15)/2
+   local x,y=(platform.window:width()-sizeX)/2,(platform.window:height()-sizeY-15)/2
    if xPos>x and xPos<x+sizeX and yPos>y then
     gui.saveTextBox()
     if yPos<y+sizeY and gui.current().wtype=="custom" then

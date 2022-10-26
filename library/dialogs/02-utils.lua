@@ -3,17 +3,17 @@ function gui.refreshCurrent()
  local current=gui.current()
  if current.size then
   local sizeX,sizeY=unpack(current.size)
-  local xPos,yPos=(width()-sizeX)/2,(height()-sizeY-15)/2
-  refresh(xPos,yPos,sizeX,sizeY+39)
+  local xPos,yPos=(platform.window:width()-sizeX)/2,(platform.window:height()-sizeY-15)/2
+  platform.window:invalidate(xPos,yPos,sizeX,sizeY+39)
  else
-  refresh()
+  platform.window:invalidate()
  end
 end
 
 function gui.addWindow(windowType,windowName,windowButtons,windowLayout,windowSize)
  table.insert(gui.windows,{wtype=windowType,name=windowName,buttons=windowButtons,layout=windowLayout,size=windowSize})
  gui.focus=-1
- refresh()
+ platform.window:invalidate()
 end
 
 function gui.current()

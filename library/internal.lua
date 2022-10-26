@@ -1,4 +1,5 @@
 
 function Lib.Internal.ShowAboutDialog()
-    Lib.Debug:Print("About Dialog not implemented yet")
+    gui.addTextWindow("About "..App.Name, "Author: "..App.Author.."\nLicense: "..App.License.."\nHomepage: "..App.Homepage)
+    gui.addButton("Close",function() gui.closeWindow() end)
 end

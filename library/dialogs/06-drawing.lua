@@ -25,7 +25,7 @@ end
 
 
 function gui.paintLayout(gc,layout,sizeX,sizeY)
- local x,y=(width()-sizeX)/2,(height()-sizeY-15)/2
+ local x,y=(platform.window:width()-sizeX)/2,(platform.window:height()-sizeY-15)/2
  for i,e in pairs(layout) do
   if e[1]=="textBox" then
    gui.paintTextBox(gc,e,x,y,gui.focus==i)
@@ -92,7 +92,7 @@ function gui.paintColorSlider(gc,slider,x,y,selected)
   gc:setColorRGB(slider.color=="red" and i*4 or newColor[1],slider.color=="green" and i*4 or newColor[2],slider.color=="blue" and i*4 or newColor[3])
   gc:fillRect(x+slider.x+i+2,y+2+slider.y,1,16)
  end
- if isCX() then
+ if platform.isColorDisplay() then
   gc:setColorRGB(255-slider.value,255-slider.value,255-slider.value)
  else
   gc:setColorRGB(255,255,255)
@@ -150,7 +150,7 @@ function gui.paintList(gc,list,x,y,selected)
 end
 
 function gui.paintButtons(gc,buttons,sizeX,sizeY,windowID)
- local x,y=(width()-sizeX)/2,(height()-sizeY-15)/2
+ local x,y=(platform.window:width()-sizeX)/2,(platform.window:height()-sizeY-15)/2
  gc:setFont("sansserif","r",10)
  if (not buttons[1].size) or gui.resized then
   local totalSize,size,pos=-7,{},{}
@@ -158,7 +158,7 @@ function gui.paintButtons(gc,buttons,sizeX,sizeY,windowID)
    size[i]=gc:getStringWidth(e[1])+10
    totalSize=totalSize+size[i]+7
   end
-  pos[1]=(width()-totalSize)/2
+  pos[1]=(platform.window:width()-totalSize)/2
   for i=2,#buttons do
    pos[i]=pos[i-1]+size[i-1]+7
   end
@@ -180,7 +180,7 @@ function gui.paintButtons(gc,buttons,sizeX,sizeY,windowID)
  end
  if gui.focus<0 and windowID==gui.nbWindows() then
   local button=buttons[-gui.focus]
-  if isCX() then
+  if platform.isColorDisplay() then
    gc:setColorRGB(50,150,190)
   else
    gc:setColorRGB(0,0,0)
@@ -191,8 +191,8 @@ function gui.paintButtons(gc,buttons,sizeX,sizeY,windowID)
 end
 
 function gui.paintTextArea(gc,text,sizeX,sizeY)
- local x,y=(width()-sizeX)/2,(height()-sizeY-15)/2
- if isCX() then
+ local x,y=(platform.window:width()-sizeX)/2,(platform.window:height()-sizeY-15)/2
+ if platform.isColorDisplay() then
   gc:setColorRGB(128,128,128)
  else
   gc:setColorRGB(255,255,255)
@@ -204,8 +204,8 @@ function gui.paintTextArea(gc,text,sizeX,sizeY)
 end
 
 function gui.paintWindowBG(gc,name,sizeX,sizeY)
- local x,y=(width()-sizeX)/2,(height()-sizeY-15)/2
- if isCX() then
+ local x,y=(platform.window:width()-sizeX)/2,(platform.window:height()-sizeY-15)/2
+ if platform.isColorDisplay() then
   gc:setColorRGB(100,100,100)
  else
   gc:setColorRGB(200,200,200)
@@ -213,13 +213,13 @@ function gui.paintWindowBG(gc,name,sizeX,sizeY)
  gc:fillRect(x-1,y-23,sizeX+4,sizeY+65)
  gc:fillRect(x,y-22,sizeX+4,sizeY+65)
  gc:fillRect(x+1,y-21,sizeX+4,sizeY+65)
- if isCX() then
+ if platform.isColorDisplay() then
   gc:setColorRGB(128,128,128)
  else
   gc:setColorRGB(0,0,0)
  end
  gc:fillRect(x-2,y-24,sizeX+4,sizeY+65)
- if isCX() then
+ if platform.isColorDisplay() then
   for i=1,22 do
    gc:setColorRGB(32+i*3,32+i*3,32+i*3)
    gc:fillRect(x,y+i-23,sizeX,1)

@@ -42,7 +42,7 @@ end
 function gui.closeWindow()
  table.remove(gui.windows)
  gui.defaultFocus()
- refresh()
+ platform.window:invalidate()
 end
 
 function gui.nbWindows()

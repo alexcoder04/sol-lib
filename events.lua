@@ -29,6 +29,7 @@ function on.paint(gc)
     if Hooks.Paint ~= nil then
         Hooks:Paint(gc)
     end
+    gui.paint(gc)
     if Lib.Debug.Buffer ~= nil then
         gc:setFont("sansserif", "r", 9)
         gc:drawString(Lib.Debug.Buffer, 0, 0, "top")
@@ -42,16 +43,32 @@ function on.paint(gc)
 end
 
 function on.mouseDown(x, y)
+    if gui.nbWindows()>0 then
+        gui.mouseDown(x,y)
+        return
+    end
     App:_onMouseClick(x, y)
     platform.window:invalidate()
 end
 
 function on.enterKey()
+    if gui.nbWindows()>0 then
+        gui.enterKey()
+        return
+    end
     App:_onElementClick()
     platform.window:invalidate()
 end
 
+function on.arrowKey(ar)
+    gui.arrowKey(ar)
+end
+
 function on.tabKey()
+    if gui.nbWindows()>0 then
+        gui.tabKey()
+        return
+    end
     local foc = App._focused + 1
     for i = 1, #(App._elements) do
         if foc > #(App._elements) then
@@ -68,12 +85,28 @@ function on.tabKey()
     platform.window:invalidate()
 end
 
+function on.backtabKey()
+    if gui.nbWindows()>0 then
+        gui.backtabKey()
+        return
+    end
+    -- TODO
+end
+
 function on.escapeKey()
+    if gui.nbWindows()>0 then
+        gui.escapeKey()
+        return
+    end
     App._focused = 0
     platform.window:invalidate()
 end
 
 function on.charIn(c)
+    if gui.nbWindows()>0 then
+        gui.charIn(ch)
+        return
+    end
     if App._focused == 0 then
         if Hooks.CharIn ~= nil then
             if Hooks:CharIn(c) then
@@ -89,6 +122,10 @@ function on.charIn(c)
 end
 
 function on.backspaceKey()
+    if gui.nbWindows()>0 then
+        gui.backspaceKey()
+        return
+    end
     if App._focused == 0 then
         if Hooks.Backspace ~= nil then
             if Hooks:Backspace() then
@@ -101,6 +138,16 @@ function on.backspaceKey()
         App._elements[App._focused]:AcceptBackspace()
         platform.window:invalidate()
     end
+end
+
+function on.resize()
+    xScroll=0
+    yScroll=0
+    gui.resize()
+end
+
+function on.help()
+    Lib.Internal.ShowAboutDialog()
 end
 
 function on.timer()
