@@ -4,7 +4,8 @@ Components.Base.TextField = {
     PosY = 0,
     Label = "",
     Border = false,
-    Color = {0, 0, 0}
+    Color = {0, 0, 0},
+    FontSize = 12
 }
 
 function Components.Base.TextField:new(o)
@@ -26,7 +27,9 @@ end
 
 function Components.Base.TextField:_draw(gc, focused)
     gc:setColorRGB(unpack(self.Color))
+    gc:setFont("sansserif", "r", self.FontSize)
     gc:drawString(self.Label, self.PosX, self.PosY, "top")
+    gc:setFont("sansserif", "r", 12)
     local w, h = Lib.Gui:GetStringSize(self.Label)
     if self.Border then
         gc:drawRect(self.PosX, self.PosY, w, h)

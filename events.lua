@@ -63,7 +63,9 @@ end
 function on.charIn(c)
     if App._focused == 0 then
         if Hooks.CharIn ~= nil then
-            Hooks:CharIn(c)
+            if Hooks:CharIn(c) then
+                platform.window:invalidate()
+            end
         end
         return
     end
@@ -76,7 +78,9 @@ end
 function on.backspaceKey()
     if App._focused == 0 then
         if Hooks.Backspace ~= nil then
-            Hooks:Backspace()
+            if Hooks:Backspace() then
+                platform.window:invalidate()
+            end
         end
         return
     end

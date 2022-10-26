@@ -23,8 +23,10 @@ All the parts are then assembled and built into one `.tns` file by [sol-tools](h
  - `res` contains any non-code resources, e. g. images and data.
  - `res/data/menu.yml` is a native nspireOS-menu, written in YAML
  - `components` are re-usable blocks of your GUI which can inherit from base components, written in YAML
+ - `solproj.yml` is where app metadata goes
  - `init.lua` runs at start
- - `app.lua` is your main file where you define what is your application about
+ - `app.lua` is your main file where you define the app logic
+ - `hooks.lua` is where you can hook into raw inspired Lua events, like drawing with `gc` inside `on.paint`
 
 ```text
  |
@@ -38,8 +40,10 @@ All the parts are then assembled and built into one `.tns` file by [sol-tools](h
  |  |--header.yml
  |  |--text.yml
  |  |--...
+ |--solproj.yml
  |--init.lua
  |--app.lua
+ |--hooks.lua
 ```
 
 ## Roadmap / TODOs
@@ -62,6 +66,8 @@ All the parts are then assembled and built into one `.tns` file by [sol-tools](h
  - [x] redraw on timer only if one of update functions returns true
  - [x] rename `Library` to `Lib`
  - [ ] schedule to do something at next redraw/update / imitating sleep function
+ - [ ] focusable and unfocusable components
+ - [ ] colorschemes
 
 ## Naming
 
