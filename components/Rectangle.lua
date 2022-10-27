@@ -25,7 +25,7 @@ function Components.Base.Rectangle:_touches(x, y)
 end
 
 function Components.Base.Rectangle:_draw(gc, focused)
-    gc:setColorRGB(unpack(self.Color))
+    gc:setColorRGB(Lib.Colors.Parse(self.Color))
     if self.Fill then
         gc:fillRect(self.PosX, self.PosY, self.Width, self.Height)
     else

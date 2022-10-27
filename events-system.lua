@@ -2,6 +2,7 @@
 function on.restore(state)
     App.Data.Var = state.data
     App.Gui.DarkMode = state.darkMode
+    Lib.Colors.UpdateColorscheme()
     document.markChanged()
 end
 
@@ -21,6 +22,7 @@ function on.construction()
         Secondary = Lib.Colors.Silver,
         Accent = Lib.Colors.Blue
     }
+    Lib.Colors.UpdateColorscheme()
 
     if Lib.Internal.IsRunnable(init) then
         init()
@@ -30,8 +32,8 @@ end
 function on.paint(gc)
     App:_draw(gc)
 
-    if Lib.Internal.IsRunnable(Hooks.Paint) then
-        Hooks.Paint(gc)
+    if Lib.Internal.IsRunnable(App.Hooks.Paint) then
+        App.Hooks.Paint(gc)
     end
 
     Lib.Dialog._paint(gc)

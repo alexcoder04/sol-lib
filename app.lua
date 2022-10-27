@@ -8,6 +8,7 @@ App = {
     Homepage = "unknown",
     RefreshRate = 10,
     SolVersion = 0,
+    Hooks = {},
     Gui = {
         DarkMode = false,
         LightColorscheme = {},
@@ -18,8 +19,6 @@ App = {
         Var = {}
     }
 }
-
-Hooks = {}
 
 function App:AddElement(element)
     table.insert(self._elements, element)
@@ -55,9 +54,8 @@ function App:_onElementClick()
 end
 
 function App:_draw(gc)
-    local bg = Lib.Colors.Background()
-    if bg ~= {255, 255, 255} then
-        gc:setColorRGB(unpack(bg))
+    if Lib.Colors.Background ~= Lib.Colors.White then
+        gc:setColorRGB(unpack(Lib.Colors.Background))
         gc:fillRect(0, 0, platform.window:width(), platform.window:height())
         gc:setColorRGB(0, 0, 0)
     end

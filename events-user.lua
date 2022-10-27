@@ -81,8 +81,8 @@ function on.charIn(c)
         return
     end
     if App._focused == 0 then
-        if Lib.Internal.IsRunnable(Hooks.CharIn) then
-            if Hooks.CharIn(c) then
+        if Lib.Internal.IsRunnable(App.Hooks.CharIn) then
+            if App.Hooks.CharIn(c) then
                 platform.window:invalidate()
             end
         end
@@ -100,8 +100,8 @@ function on.backspaceKey()
         return
     end
     if App._focused == 0 then
-        if Lib.Internal.IsRunnable(Hooks.Backspace) then
-            if Hooks.Backspace() then
+        if Lib.Internal.IsRunnable(App.Hooks.Backspace) then
+            if App.Hooks.Backspace() then
                 platform.window:invalidate()
             end
         end

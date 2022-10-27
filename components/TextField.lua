@@ -26,13 +26,7 @@ function Components.Base.TextField:_touches(x, y)
 end
 
 function Components.Base.TextField:_draw(gc, focused)
-    local c
-    if type(self.Color) == "function" then
-        c = self.Color()
-    else
-        c = self.Color
-    end
-    gc:setColorRGB(unpack(c))
+    gc:setColorRGB(Lib.Colors.Parse(self.Color))
     gc:setFont("sansserif", "r", self.FontSize)
     gc:drawString(self.Label, self.PosX, self.PosY, "top")
     gc:setFont("sansserif", "r", 12)

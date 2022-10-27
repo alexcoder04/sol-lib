@@ -50,7 +50,7 @@ function Components.Base.InputField:_draw(gc, focused)
         gc:setColorRGB(unpack(Lib.Colors.Silver))
         gc:fillRect(self.PosX, self.PosY, self.Width, h)
     end
-    gc:setColorRGB(unpack(self.Color))
+    gc:setColorRGB(Lib.Colors.Parse(self.Color))
     gc:drawString(dt, self.PosX, self.PosY, "top")
     if h == 0 then
         h = 20

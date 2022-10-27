@@ -34,25 +34,37 @@ Lib.Colors = {
     Yellow = { 255, 255, 0 }
 }
 
-function _get_color_mode()
+function Lib.Colors.UpdateColorscheme()
+    for key, val in pairs(App.Gui[_get_colorscheme()]) do
+        Lib.Colors[key] = val
+    end
+    platform.window:invalidate()
+end
+
+function Lib.Colors.DarkModeOn()
+    App.Gui.DarkMode = true
+    Lib.Colors.UpdateColorscheme()
+end
+
+function Lib.Colors.DarkModeOff()
+    App.Gui.DarkMode = false
+    Lib.Colors.UpdateColorscheme()
+end
+
+function Lib.Colors.DarkModeToggle()
+    App.Gui.DarkMode = not App.Gui.DarkMode
+    Lib.Colors.UpdateColorscheme()
+end
+
+function Lib.Colors.Parse(c)
+    if type(c) == "table" then return unpack(c) end
+    if type(c) == "string" then return unpack(Lib.Colors[c]) end
+    return 0, 0, 0
+end
+
+function _get_colorscheme()
     if App.Gui.DarkMode then
         return "DarkColorscheme"
     end
     return "LightColorscheme"
-end
-
-function Lib.Colors.Background()
-    return App.Gui[_get_color_mode()].Background
-end
-
-function Lib.Colors.Foreground()
-    return App.Gui[_get_color_mode()].Foreground
-end
-
-function Lib.Colors.Secondary()
-    return App.Gui[_get_color_mode()].Secondary
-end
-
-function Lib.Colors.Accent()
-    return App.Gui[_get_color_mode()].Accent
 end
