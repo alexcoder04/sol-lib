@@ -62,3 +62,7 @@ Check out the [Quickstart guide](https://alexcoder04.github.io/sol-docs/quicksta
 ## Naming
 
 *Lua* (portuguese for "moon") -> *Sol* (portuguese for "sun")
+
+## Credits
+
+ - The dialog library module is based on the nSpaint GUI engine written by Loïc Pujet.

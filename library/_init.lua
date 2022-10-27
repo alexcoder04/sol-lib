@@ -2,8 +2,9 @@
 Lib = {
     Colors = {},
     Debug = {},
-    Dialog = {},
-    Gui = {},
+    Gui = {
+        MultiLineStr = {}
+    },
     Internal = {},
     Timeout = {}
 }
