@@ -1,16 +1,13 @@
 
 function Lib.Dialog._execute_func(element,arg)
-    if element.func then
-        element.func(arg)
-    end
+    if not element.func then return end
+    element.func(arg)
 end
 
 function Lib.Dialog._save_text_box()
     local elem=Lib.Dialog.Current().layout[Lib.Dialog.focus]
-    if elem then
-        if elem[1]=="textBox" then
-            Lib.Dialog._execute_func(elem,elem.text)
-        end
+    if elem and (elem[1] == "textBox") then
+        Lib.Dialog._execute_func(elem,elem.text)
     end
 end
 
@@ -32,7 +29,10 @@ function Lib.Dialog._move_focus(nb)
                 Lib.Dialog.focus=1
                 nb=1
             end
-        elseif Lib.Dialog.focus==0 then
+            return
+        end
+
+        if Lib.Dialog.focus==0 then
             if originalFocus<0 then
                 if currentWindow.wtype=="dialogBox" then
                     Lib.Dialog.focus=-#currentWindow.buttons
@@ -47,21 +47,25 @@ function Lib.Dialog._move_focus(nb)
             else
                 Lib.Dialog.focus=nb<0 and -#currentWindow.buttons or 1
             end
-        else
-            if currentWindow.wtype=="dialogBox" then
-                test=true
-                Lib.Dialog.focus=-1
-            elseif currentWindow.wtype=="custom" then
-                if Lib.Dialog.focus<=#currentWindow.layout then
-                    if currentWindow.layout[Lib.Dialog.focus][1]=="label" then
-                        Lib.Dialog.focus=Lib.Dialog.focus+(nb<0 and -1 or 1)
-                    else
-                        test=true
-                    end
+            return
+        end
+        
+        if currentWindow.wtype=="dialogBox" then
+            test=true
+            Lib.Dialog.focus=-1
+            return
+        end
+
+        if currentWindow.wtype=="custom" then
+            if Lib.Dialog.focus<=#currentWindow.layout then
+                if currentWindow.layout[Lib.Dialog.focus][1]=="label" then
+                    Lib.Dialog.focus=Lib.Dialog.focus+(nb<0 and -1 or 1)
                 else
                     test=true
-                    Lib.Dialog.focus=-1
                 end
+            else
+                test=true
+                Lib.Dialog.focus=-1
             end
         end
     end
@@ -94,18 +98,25 @@ function Lib.Dialog._set_focus(x,y,window)
                 Lib.Dialog.list.mouseDown(e,x-e.x,y-e.y)
                 Lib.Dialog.RefreshCurrent()
             end
-        elseif e[1]=="textBox" then
+            return
+        end
+
+        if e[1]=="textBox" then
             if x>e.x and y>e.y and x<e.x+e.sizeX and y<e.y+22 then
                 Lib.Dialog.focus=i
                 Lib.Dialog.textBox.mouseDown(e,x-e.x,y-e.y)
                 Lib.Dialog.RefreshCurrent()
             end
-        elseif e[1]=="colorSlider" then
+            return
+        end
+
+        if e[1]=="colorSlider" then
             if x>e.x and y>e.y and x<e.x+68 and y<e.y+20 then
                 Lib.Dialog.focus=i
                 Lib.Dialog.colorSlider.mouseDown(e,x-e.x,y-e.y)
                 Lib.Dialog.RefreshCurrent()
             end
+            return
         end
     end
 end

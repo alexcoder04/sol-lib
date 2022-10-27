@@ -1,10 +1,10 @@
 
 function Lib.Dialog.textBox.charIn(char,textBox)
-    if string.len(char)==1 then
-        textBox.prev={textBox.text,textBox.cursor}
-        textBox.text=string.usub(textBox.text,1,textBox.cursor)..char..string.usub(textBox.text,textBox.cursor+1)
-        textBox.cursor=textBox.cursor+1
-    end
+    if string.len(char) ~= 1 then return end
+
+    textBox.prev={textBox.text,textBox.cursor}
+    textBox.text=string.usub(textBox.text,1,textBox.cursor)..char..string.usub(textBox.text,textBox.cursor+1)
+    textBox.cursor=textBox.cursor+1
 end
 
 function Lib.Dialog.textBox.arrowKey(arrow,textBox)
@@ -55,19 +55,19 @@ function Lib.Dialog.list.arrowKey(arrow,list)
 end
 
 function Lib.Dialog.list.mouseDown(list,x,y)
-    if #list.elements>0 then
-        if x>list.sizeX-17 then
-            if y>list.sizeY/2 and list.selected<#list.elements then
-                list.selected=list.selected+1
-                Lib.Dialog._execute_func(list,list.elements[list.selected])
-            elseif y<list.sizeY/2 and list.selected>1 then
-                list.selected=list.selected-1
-                Lib.Dialog._execute_func(list,list.elements[list.selected])
-            end
-        elseif list.fontHeight  then
-            list.selected=math.floor(y/list.fontHeight)+1+list.scroll
-            list.selected=list.selected<#list.elements and list.selected or #list.elements
+    if #list.elements <= 0 then return end
+
+    if x > (list.sizeX - 17) then
+        if y>list.sizeY/2 and list.selected<#list.elements then
+            list.selected=list.selected+1
+            Lib.Dialog._execute_func(list,list.elements[list.selected])
+        elseif y<list.sizeY/2 and list.selected>1 then
+            list.selected=list.selected-1
             Lib.Dialog._execute_func(list,list.elements[list.selected])
         end
+    elseif list.fontHeight  then
+        list.selected=math.floor(y/list.fontHeight)+1+list.scroll
+        list.selected=list.selected<#list.elements and list.selected or #list.elements
+        Lib.Dialog._execute_func(list,list.elements[list.selected])
     end
 end
