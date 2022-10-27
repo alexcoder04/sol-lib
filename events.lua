@@ -29,7 +29,7 @@ function on.paint(gc)
     if Hooks.Paint ~= nil then
         Hooks:Paint(gc)
     end
-    gui.paint(gc)
+    Lib.Dialog._paint(gc)
     if Lib.Debug.Buffer ~= nil then
         gc:setFont("sansserif", "r", 9)
         gc:drawString(Lib.Debug.Buffer, 0, 0, "top")
@@ -43,8 +43,8 @@ function on.paint(gc)
 end
 
 function on.mouseDown(x, y)
-    if gui.nbWindows()>0 then
-        gui.mouseDown(x,y)
+    if Lib.Dialog.NbWindows()>0 then
+        Lib.Dialog._mouse_down(x,y)
         return
     end
     App:_onMouseClick(x, y)
@@ -52,8 +52,8 @@ function on.mouseDown(x, y)
 end
 
 function on.enterKey()
-    if gui.nbWindows()>0 then
-        gui.enterKey()
+    if Lib.Dialog.NbWindows()>0 then
+        Lib.Dialog._enter_key()
         return
     end
     App:_onElementClick()
@@ -61,12 +61,12 @@ function on.enterKey()
 end
 
 function on.arrowKey(ar)
-    gui.arrowKey(ar)
+    Lib.Dialog._arrow_key(ar)
 end
 
 function on.tabKey()
-    if gui.nbWindows()>0 then
-        gui.tabKey()
+    if Lib.Dialog.NbWindows()>0 then
+        Lib.Dialog._tab_key()
         return
     end
     local foc = App._focused + 1
@@ -86,16 +86,16 @@ function on.tabKey()
 end
 
 function on.backtabKey()
-    if gui.nbWindows()>0 then
-        gui.backtabKey()
+    if Lib.Dialog.NbWindows()>0 then
+        Lib.Dialog._back_tab_key()
         return
     end
     -- TODO
 end
 
 function on.escapeKey()
-    if gui.nbWindows()>0 then
-        gui.escapeKey()
+    if Lib.Dialog.NbWindows()>0 then
+        Lib.Dialog._escape_key()
         return
     end
     App._focused = 0
@@ -103,8 +103,8 @@ function on.escapeKey()
 end
 
 function on.charIn(c)
-    if gui.nbWindows()>0 then
-        gui.charIn(ch)
+    if Lib.Dialog.NbWindows()>0 then
+        Lib.Dialog._char_in(ch)
         return
     end
     if App._focused == 0 then
@@ -122,8 +122,8 @@ function on.charIn(c)
 end
 
 function on.backspaceKey()
-    if gui.nbWindows()>0 then
-        gui.backspaceKey()
+    if Lib.Dialog.NbWindows()>0 then
+        Lib.Dialog._backspace_key()
         return
     end
     if App._focused == 0 then
@@ -143,7 +143,7 @@ end
 function on.resize()
     xScroll=0
     yScroll=0
-    gui.resize()
+    Lib.Dialog._resize()
 end
 
 function on.help()

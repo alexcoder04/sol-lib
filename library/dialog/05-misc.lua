@@ -6,7 +6,7 @@ function gui.executeFunction(element,arg)
 end
 
 function gui.saveTextBox()
- local elem=gui.current().layout[gui.focus]
+ local elem=Lib.Dialog.Current().layout[gui.focus]
  if elem then
   if elem[1]=="textBox" then
    gui.executeFunction(elem,elem.text)
@@ -15,7 +15,7 @@ function gui.saveTextBox()
 end
 
 function gui.moveFocus(nb)
- local currentWindow=gui.current()
+ local currentWindow=Lib.Dialog.Current()
  local test=false
  local originalFocus=gui.focus
  nb=gui.focus<0 and -nb or nb
@@ -77,7 +77,7 @@ function gui.buttonDown(x,y,buttons)
 end
 
 function gui.OKButton()
- local buttons=gui.current().buttons
+ local buttons=Lib.Dialog.Current().buttons
  for i=1,#buttons do
   if buttons[i][1]=="OK" then
    gui.saveTextBox()
@@ -92,19 +92,19 @@ function gui.setFocus(x,y,window)
    if x>e.x and y>e.y and x<e.x+e.sizeX and y<e.y+e.sizeY then
     gui.focus=i
     gui.list.mouseDown(e,x-e.x,y-e.y)
-    gui.refreshCurrent()
+    Lib.Dialog.RefreshCurrent()
    end
   elseif e[1]=="textBox" then
    if x>e.x and y>e.y and x<e.x+e.sizeX and y<e.y+22 then
     gui.focus=i
     gui.textBox.mouseDown(e,x-e.x,y-e.y)
-    gui.refreshCurrent()
+    Lib.Dialog.RefreshCurrent()
    end
   elseif e[1]=="colorSlider" then
    if x>e.x and y>e.y and x<e.x+68 and y<e.y+20 then
     gui.focus=i
     gui.colorSlider.mouseDown(e,x-e.x,y-e.y)
-    gui.refreshCurrent()
+    Lib.Dialog.RefreshCurrent()
    end
   end
  end

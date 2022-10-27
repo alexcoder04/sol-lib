@@ -178,7 +178,7 @@ function gui.paintButtons(gc,buttons,sizeX,sizeY,windowID)
   gc:setColorRGB(0,0,0)
   gc:drawString(e[1],e.pos+5,y+sizeY+20,"middle")
  end
- if gui.focus<0 and windowID==gui.nbWindows() then
+ if gui.focus<0 and windowID==Lib.Dialog.NbWindows() then
   local button=buttons[-gui.focus]
   if platform.isColorDisplay() then
    gc:setColorRGB(50,150,190)

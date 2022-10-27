@@ -1,5 +1,5 @@
 
 function Lib.Internal.ShowAboutDialog()
-    gui.addTextWindow("About "..App.Name, "Author: "..App.Author.."\nLicense: "..App.License.."\nHomepage: "..App.Homepage)
-    gui.addButton("Close",function() gui.closeWindow() end)
+    Lib.Dialog.AddTextWindow("About "..App.Name, "Author: "..App.Author.."\nLicense: "..App.License.."\nHomepage: "..App.Homepage)
+    Lib.Dialog.AddButton("Close",function() Lib.Dialog.CloseWindow() end)
 end
