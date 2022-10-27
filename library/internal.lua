@@ -4,7 +4,7 @@ function Lib.Internal.ShowAboutDialog()
     Lib.Dialog.AddButton("Close",function() Lib.Dialog.CloseWindow() end)
 end
 
--- check if varable is function
+-- check if variable is function
 function Lib.Internal.IsRunnable(var)
     return (var ~= nil) and (type(var) == "function")
 end

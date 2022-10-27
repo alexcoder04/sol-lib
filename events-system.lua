@@ -24,7 +24,7 @@ function on.paint(gc)
         App.Hooks.Paint(gc)
     end
 
-    -- 3) windows
+    -- 3) dialog windows
     Lib.Dialog._paint(gc)
 
     -- 4) debug

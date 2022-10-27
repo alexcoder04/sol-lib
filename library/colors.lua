@@ -1,6 +1,6 @@
 
--- A part of BetterLuaAPI by Adriweb was used
--- see <https://github.com/adriweb/BetterLuaAPI-for-TI-Nspire.git> for more useful functions
+-- The color definitions from BetterLuaAPI by Adriweb were used
+-- See <https://github.com/adriweb/BetterLuaAPI-for-TI-Nspire> for more useful functions
 
 Lib.Colors = {
     Black = { 0, 0, 0 },
