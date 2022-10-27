@@ -2,6 +2,7 @@
 function on.restore(state)
     App.Data.Var = state.data
     App.Gui.DarkMode = state.darkMode
+    document.markChanged()
 end
 
 function on.construction()

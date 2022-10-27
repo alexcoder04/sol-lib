@@ -6,11 +6,11 @@ function Lib.Dialog._mouse_down(xPos,yPos)
             local sizeX,sizeY=unpack(window.size)
             local x,y=(platform.window:width()-sizeX)/2,(platform.window:height()-sizeY-15)/2
             if xPos>x and xPos<x+sizeX and yPos>y then
-                gui.saveTextBox()
+                Lib.Dialog._save_text_box()
                 if yPos<y+sizeY and Lib.Dialog.Current().wtype=="custom" then
-                    gui.setFocus(xPos-x,yPos-y,window)
+                    Lib.Dialog._set_focus(xPos-x,yPos-y,window)
                 elseif yPos>y+sizeY and yPos<y+sizeY+39 then
-                    gui.buttonDown(xPos,yPos,window.buttons)
+                    Lib.Dialog._button_down(xPos,yPos,window.buttons)
                 end
             end
         end
@@ -18,46 +18,46 @@ function Lib.Dialog._mouse_down(xPos,yPos)
 end
 
 function Lib.Dialog._paint(gc)
-    for i,e in pairs(gui.windows) do
-        gui[e.wtype].paint(gc,e,i)
+    for i,e in pairs(Lib.Dialog._windows) do
+        Lib.Dialog[e.wtype].paint(gc,e,i)
     end
-    gui.resized=false
+    Lib.Dialog._resized=false
 end
 
 function Lib.Dialog._resize()
-    gui.resized=true
+    Lib.Dialog._resized=true
 end
 
 function Lib.Dialog._tab_key()
     if Lib.Dialog.NbWindows()>0 then
-        gui.saveTextBox()
-        gui.moveFocus(1)
+        Lib.Dialog._save_text_box()
+        Lib.Dialog._move_focus(1)
         Lib.Dialog.RefreshCurrent()
     end
 end
 
 function Lib.Dialog._back_tab_key()
     if Lib.Dialog.NbWindows()>0 then
-        gui.saveTextBox()
-        gui.moveFocus(-1)
+        Lib.Dialog._save_text_box()
+        Lib.Dialog._move_focus(-1)
         Lib.Dialog.RefreshCurrent()
     end
 end
 
 function Lib.Dialog._arrow_key(arrow)
     if Lib.Dialog.NbWindows()>0 then
-        if gui.focus<0 then
+        if Lib.Dialog.focus<0 then
             if arrow=="left" then
-                gui.moveFocus(-1)
+                Lib.Dialog._move_focus(-1)
                 Lib.Dialog.RefreshCurrent()
             elseif arrow=="right" then
-                gui.moveFocus(1)
+                Lib.Dialog._move_focus(1)
                 Lib.Dialog.RefreshCurrent()
             end
-        elseif gui.focus>0 then
-            local currentElem=Lib.Dialog.Current().layout[gui.focus]
-            if gui[currentElem[1]].arrowKey then
-                gui[currentElem[1]].arrowKey(arrow,currentElem)
+        elseif Lib.Dialog.focus>0 then
+            local currentElem=Lib.Dialog.Current().layout[Lib.Dialog.focus]
+            if Lib.Dialog[currentElem[1]].arrowKey then
+                Lib.Dialog[currentElem[1]].arrowKey(arrow,currentElem)
                 Lib.Dialog.RefreshCurrent()
             end
         end
@@ -66,20 +66,20 @@ end
 
 function Lib.Dialog._enter_key()
     if Lib.Dialog.NbWindows()>0 then
-        if gui.focus<0 then
-            Lib.Dialog.Current().buttons[-gui.focus][2]()
+        if Lib.Dialog.focus<0 then
+            Lib.Dialog.Current().buttons[-Lib.Dialog.focus][2]()
         elseif Lib.Dialog.Current().wtype=="custom" then
-            gui.OKButton()
+            Lib.Dialog._ok_button()
         end
     end
 end
 
 function Lib.Dialog._char_in(char)
     if Lib.Dialog.NbWindows()>0 then
-        if gui.focus>0 then
-            local currentElem=Lib.Dialog.Current().layout[gui.focus]
-            if gui[currentElem[1]].charIn then
-                gui[currentElem[1]].charIn(char,currentElem)
+        if Lib.Dialog.focus>0 then
+            local currentElem=Lib.Dialog.Current().layout[Lib.Dialog.focus]
+            if Lib.Dialog[currentElem[1]].charIn then
+                Lib.Dialog[currentElem[1]].charIn(char,currentElem)
                 Lib.Dialog.RefreshCurrent()
             end
         end
@@ -88,10 +88,10 @@ end
 
 function Lib.Dialog._backspace_key()
     if Lib.Dialog.NbWindows()>0 then
-        if gui.focus>0 then
-            local currentElem=Lib.Dialog.Current().layout[gui.focus]
-            if gui[currentElem[1]].backspaceKey then
-                gui[currentElem[1]].backspaceKey(currentElem)
+        if Lib.Dialog.focus>0 then
+            local currentElem=Lib.Dialog.Current().layout[Lib.Dialog.focus]
+            if Lib.Dialog[currentElem[1]].backspaceKey then
+                Lib.Dialog[currentElem[1]].backspaceKey(currentElem)
                 Lib.Dialog.RefreshCurrent()
             end
         end

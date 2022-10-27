@@ -40,19 +40,19 @@ function Lib.Dialog.AddList(xPos,yPos,width,height,listElements,listFunction)
 end
 
 function Lib.Dialog.CloseWindow()
-    table.remove(gui.windows)
+    table.remove(Lib.Dialog._windows)
     Lib.Dialog.DefaultFocus()
     platform.window:invalidate()
 end
 
 function Lib.Dialog.NbWindows()
-    return #gui.windows
+    return #Lib.Dialog._windows
 end
 
 function Lib.Dialog.DefaultFocus()
     if Lib.Dialog.NbWindows()>0 then
-        gui.focus=-#Lib.Dialog.Current().buttons
-        gui.moveFocus(1)
-        gui.focus=gui.focus>0 and gui.focus or -1
+        Lib.Dialog.focus=-#Lib.Dialog.Current().buttons
+        Lib.Dialog._move_focus(1)
+        Lib.Dialog.focus=Lib.Dialog.focus>0 and Lib.Dialog.focus or -1
     end
 end

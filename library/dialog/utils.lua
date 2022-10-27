@@ -11,11 +11,11 @@ function Lib.Dialog.RefreshCurrent()
 end
 
 function Lib.Dialog.AddWindow(windowType,windowName,windowButtons,windowLayout,windowSize)
-    table.insert(gui.windows,{wtype=windowType,name=windowName,buttons=windowButtons,layout=windowLayout,size=windowSize})
-    gui.focus=-1
+    table.insert(Lib.Dialog._windows,{wtype=windowType,name=windowName,buttons=windowButtons,layout=windowLayout,size=windowSize})
+    Lib.Dialog.focus=-1
     platform.window:invalidate()
 end
 
 function Lib.Dialog.Current()
-    return gui.windows[#gui.windows]
+    return Lib.Dialog._windows[#Lib.Dialog._windows]
 end

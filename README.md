@@ -52,6 +52,7 @@ Check out the [Quickstart guide](https://alexcoder04.github.io/sol-docs/quicksta
  - [ ] message box components imitating nspireOS's UI
    - [x] basic support
    - [ ] theming
+   - [ ] global theming through MyLib
  - [x] redraw on timer only if one of update functions returns true
  - [x] rename `Library` to `Lib`
  - [ ] schedule to do something at next redraw/update / imitating sleep function
