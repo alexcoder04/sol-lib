@@ -1,4 +1,5 @@
 
+-- initialize App table
 App = {
     _elements = {},
     _focused = 0,
@@ -22,6 +23,47 @@ App = {
 
 function App:AddElement(element)
     table.insert(self._elements, element)
+end
+
+-- initialize colorscheme, is called after Lib.Colors.* is initialized
+function App:_init_coloscheme()
+    self.Gui.LightColorscheme = {
+        Background = Lib.Colors.White,
+        Foreground = Lib.Colors.Black,
+        Secondary = Lib.Colors.Grey,
+        Accent = Lib.Colors.Blue
+    }
+    self.Gui.DarkColorscheme = {
+        Background = Lib.Colors.Black,
+        Foreground = Lib.Colors.White,
+        Secondary = Lib.Colors.Silver,
+        Accent = Lib.Colors.Blue
+    }
+end
+
+-- dir=true => next, dir=false => prev
+function App:_change_focused(dir)
+    local foc
+    if dir then
+        foc = self._focused + 1
+    else
+        foc = self._focused - 1
+    end
+
+    for i = 1, #(self._elements) do
+        if dir and (foc > #(self._elements)) then
+            foc = 1
+        elseif foc < 1 then
+            foc = #(self._elements)
+        end
+
+        if not self._elements[foc].Hidden then
+            self._focused = foc
+            platform.window:invalidate()
+            return
+        end
+        foc = foc + 1
+    end
 end
 
 function App:_update()

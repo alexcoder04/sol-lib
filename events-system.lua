@@ -10,34 +10,24 @@ function on.construction()
     math.randomseed(timer:getMilliSecCounter())
     timer.start(App.RefreshRate)
 
-    App.Gui.LightColorscheme = {
-        Background = Lib.Colors.White,
-        Foreground = Lib.Colors.Black,
-        Secondary = Lib.Colors.Grey,
-        Accent = Lib.Colors.Blue
-    }
-    App.Gui.DarkColorscheme = {
-        Background = Lib.Colors.Black,
-        Foreground = Lib.Colors.White,
-        Secondary = Lib.Colors.Silver,
-        Accent = Lib.Colors.Blue
-    }
-    Lib.Colors.UpdateColorscheme()
-
     if Lib.Internal.IsRunnable(init) then
         init()
     end
 end
 
 function on.paint(gc)
+    -- 1) components
     App:_draw(gc)
 
+    -- 2) hooks
     if Lib.Internal.IsRunnable(App.Hooks.Paint) then
         App.Hooks.Paint(gc)
     end
 
+    -- 3) windows
     Lib.Dialog._paint(gc)
 
+    -- 4) debug
     if (Lib.Debug.Buffer ~= nil) and (type(Lib.Debug.Buffer) == "string") then
         gc:setFont("sansserif", "r", 9)
         gc:drawString(Lib.Debug.Buffer, 0, 0, "top")

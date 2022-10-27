@@ -34,12 +34,26 @@ Lib.Colors = {
     Yellow = { 255, 255, 0 }
 }
 
+function Lib.Colors._get_colorscheme()
+    if App.Gui.DarkMode then
+        return "DarkColorscheme"
+    end
+    return "LightColorscheme"
+end
+
+-- sets the Lib.Colors.Foreground etc from App.Gui.*Colorscheme.*
 function Lib.Colors.UpdateColorscheme()
-    for key, val in pairs(App.Gui[_get_colorscheme()]) do
+    for key, val in pairs(App.Gui[Lib.Colors._get_colorscheme()]) do
         Lib.Colors[key] = val
     end
     platform.window:invalidate()
 end
+
+-- we do here because
+-- 1) Lib.Colors.* are registered now
+-- 2) project's app.lua did not run yet -> it can override the colorscheme later
+App:_init_coloscheme()
+Lib.Colors.UpdateColorscheme()
 
 function Lib.Colors.DarkModeOn()
     App.Gui.DarkMode = true
@@ -60,11 +74,4 @@ function Lib.Colors.Parse(c)
     if type(c) == "table" then return unpack(c) end
     if type(c) == "string" then return unpack(Lib.Colors[c]) end
     return 0, 0, 0
-end
-
-function _get_colorscheme()
-    if App.Gui.DarkMode then
-        return "DarkColorscheme"
-    end
-    return "LightColorscheme"
 end

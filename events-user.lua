@@ -13,6 +13,14 @@ function on.enterKey()
         Lib.Dialog._enter_key()
         return
     end
+    if App._focused == 0 then
+        if Lib.Internal.IsRunnable(App.Hooks.EnterKey) then
+            if App.Hooks.EnterKey(c) then
+                platform.window:invalidate()
+            end
+        end
+        return
+    end
     App:_onElementClick()
     platform.window:invalidate()
 end
@@ -29,20 +37,7 @@ function on.tabKey()
         Lib.Dialog._tab_key()
         return
     end
-    local foc = App._focused + 1
-    for i = 1, #(App._elements) do
-        if foc > #(App._elements) then
-            foc = 1
-        end
-        if not App._elements[foc].Hidden then
-            App._focused = foc
-            platform.window:invalidate()
-            return
-        end
-        foc = foc + 1
-    end
-    App._focused = 0
-    platform.window:invalidate()
+    App:_change_focused(true)
 end
 
 function on.backtabKey()
@@ -50,20 +45,7 @@ function on.backtabKey()
         Lib.Dialog._back_tab_key()
         return
     end
-    local foc = App._focused - 1
-    for i = 1, #(App._elements) do
-        if foc < 1 then
-            foc = #(App._elements)
-        end
-        if not App._elements[foc].Hidden then
-            App._focused = foc
-            platform.window:invalidate()
-            return
-        end
-        foc = foc - 1
-    end
-    App._focused = 0
-    platform.window:invalidate()
+    App:_change_focused(false)
 end
 
 function on.escapeKey()

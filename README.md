@@ -37,6 +37,7 @@ Check out the [Quickstart guide](https://alexcoder04.github.io/sol-docs/quicksta
 
  - [ ] more base components
    - [x] input field
+   - [ ] canvas
    - [ ] list
    - [ ] sublayouts/containers
    - [ ] tabs
@@ -52,9 +53,8 @@ Check out the [Quickstart guide](https://alexcoder04.github.io/sol-docs/quicksta
  - [ ] message box components imitating nspireOS's UI
    - [x] basic support
    - [ ] theming
-   - [ ] global theming through MyLib
+   - [ ] global theming through `MyLib`
  - [x] redraw on timer only if one of update functions returns true
- - [x] rename `Library` to `Lib`
  - [ ] schedule to do something at next redraw/update / imitating sleep function
    - [x] do at next update
    - [ ] do in specific time interval
