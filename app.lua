@@ -15,14 +15,33 @@ App = {
         LightColorscheme = {},
         DarkColorscheme = {}
     },
+    Interactions = {},
     Data = {
         Const = {},
         Var = {}
     }
 }
 
+-- register element and return its id
 function App:AddElement(element)
     table.insert(self._elements, element)
+    return #(self._elements)
+end
+
+-- execute a function as if it is running on an element
+function App:ElementExec(id, callback)
+    if id > #(self._elements) or id < 1 or (not Lib.Internal.IsRunnable(callback)) then return end
+    return callback(self._elements[id])
+end
+
+function App:ElValGet(id, key)
+    if id > #(self._elements) or id < 1 then return end
+    return App._elements[id][key]
+end
+
+function App:ElValSet(id, key, val)
+    if id > #(self._elements) or id < 1 then return end
+    App._elements[id][key] = val
 end
 
 -- initialize colorscheme, is called after Lib.Colors.* is initialized

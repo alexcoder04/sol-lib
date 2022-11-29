@@ -13,6 +13,14 @@ function Lib.Gui.DrawFocusBox(x, y, w, h, gc)
     gc:setColorRGB(0, 0, 0)
 end
 
+function Lib.Gui.GenTextField(label, x, y)
+    local tf = Components.Base.TextField:new()
+    tf.Label = label
+    tf.PosX = x
+    tf.PosY = y
+    return tf
+end
+
 
 
 -- mutiline string draw based on nSpaint GUI engine

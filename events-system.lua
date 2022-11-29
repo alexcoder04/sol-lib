@@ -10,6 +10,10 @@ function on.construction()
     math.randomseed(timer:getMilliSecCounter())
     timer.start(App.RefreshRate)
 
+    if Lib.Internal.IsRunnable(App.Interactions.Copy) then toolpalette.enableCopy(true) end
+    if Lib.Internal.IsRunnable(App.Interactions.Cut) then toolpalette.enableCut(true) end
+    if Lib.Internal.IsRunnable(App.Interactions.Paste) then toolpalette.enablePaste(true) end
+
     if Lib.Internal.IsRunnable(init) then
         init()
     end

@@ -98,3 +98,21 @@ end
 function on.help()
     Lib.Internal.ShowAboutDialog()
 end
+
+function on.copy()
+    if Lib.Internal.IsRunnable(App.Interactions.Copy) then
+        clipboard.addText(App.Interactions.Copy())
+    end
+end
+
+function on.cut()
+    if Lib.Internal.IsRunnable(App.Interactions.Cut) then
+        clipboard.addText(App.Interactions.Cut())
+    end
+end
+
+function on.paste()
+    if Lib.Internal.IsRunnable(App.Interactions.Paste) then
+        App.Interactions.Paste(clipboard.getText())
+    end
+end
