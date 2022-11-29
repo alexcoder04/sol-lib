@@ -59,6 +59,9 @@ Check out the [Quickstart guide](https://alexcoder04.github.io/sol-docs/quicksta
    - [x] do at next update
    - [ ] do in specific time interval
  - [x] light/dark mode switching
+ - [x] improve `InputField` component
+   - [x] data types (e. g. int)
+   - [x] labels
 
 ## Naming
 
