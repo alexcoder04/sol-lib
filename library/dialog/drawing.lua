@@ -90,11 +90,7 @@ function Lib.Dialog._paint_color_slider(gc,slider,x,y,selected)
         gc:setColorRGB(slider.color=="red" and i*4 or newColor[1],slider.color=="green" and i*4 or newColor[2],slider.color=="blue" and i*4 or newColor[3])
         gc:fillRect(x+slider.x+i+2,y+2+slider.y,1,16)
     end
-    if platform.isColorDisplay() then
-        gc:setColorRGB(255-slider.value,255-slider.value,255-slider.value)
-    else
-        gc:setColorRGB(255,255,255)
-    end
+    gc:setColorRGB(255-slider.value,255-slider.value,255-slider.value)
     gc:fillRect(x+slider.x+slider.value/4+1,y+slider.y-2,3,24)
 end
 
@@ -178,11 +174,7 @@ function Lib.Dialog._paint_buttons(gc,buttons,sizeX,sizeY,windowID)
     end
     if Lib.Dialog.focus<0 and windowID==Lib.Dialog.NbWindows() then
         local button=buttons[-Lib.Dialog.focus]
-        if platform.isColorDisplay() then
-            gc:setColorRGB(50,150,190)
-        else
-            gc:setColorRGB(0,0,0)
-        end
+        gc:setColorRGB(50,150,190)
         gc:drawRect(button.pos-3,y+sizeY+4,button.size+5,32)
         gc:drawRect(button.pos-2,y+sizeY+5,button.size+3,30)
     end
@@ -190,11 +182,7 @@ end
 
 function Lib.Dialog._paint_text_area(gc,text,sizeX,sizeY)
     local x,y=(platform.window:width()-sizeX)/2,(platform.window:height()-sizeY-15)/2
-    if platform.isColorDisplay() then
-        gc:setColorRGB(128,128,128)
-    else
-        gc:setColorRGB(255,255,255)
-    end
+    gc:setColorRGB(128,128,128)
     gc:drawRect(x+6,y+6,sizeX-13,sizeY-13)
     gc:setColorRGB(0,0,0)
     gc:setFont("sansserif","r",10)
@@ -203,28 +191,15 @@ end
 
 function Lib.Dialog._paint_window_bg(gc,name,sizeX,sizeY)
     local x,y=(platform.window:width()-sizeX)/2,(platform.window:height()-sizeY-15)/2
-    if platform.isColorDisplay() then
-        gc:setColorRGB(100,100,100)
-    else
-        gc:setColorRGB(200,200,200)
-    end
+    gc:setColorRGB(100,100,100)
     gc:fillRect(x-1,y-23,sizeX+4,sizeY+65)
     gc:fillRect(x,y-22,sizeX+4,sizeY+65)
     gc:fillRect(x+1,y-21,sizeX+4,sizeY+65)
-    if platform.isColorDisplay() then
-        gc:setColorRGB(128,128,128)
-    else
-        gc:setColorRGB(0,0,0)
-    end
+    gc:setColorRGB(128,128,128)
     gc:fillRect(x-2,y-24,sizeX+4,sizeY+65)
-    if platform.isColorDisplay() then
-        for i=1,22 do
-            gc:setColorRGB(32+i*3,32+i*3,32+i*3)
-            gc:fillRect(x,y+i-23,sizeX,1)
-        end
-    else
-        gc:setColorRGB(0,0,0)
-        gc:fillRect(x,y-22,sizeX,22)
+    for i=1,22 do
+        gc:setColorRGB(32+i*3,32+i*3,32+i*3)
+        gc:fillRect(x,y+i-23,sizeX,1)
     end
     gc:setColorRGB(255,255,255)
     gc:setFont("sansserif","r",10)
