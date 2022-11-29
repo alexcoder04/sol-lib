@@ -96,7 +96,7 @@ end
 
 function Components.Base.InputField:AcceptChar(c)
     if self.Type == "number" then
-        if (not Lib.Internal.IsDigit(c)) and c ~= "." and string.byte(c) ~= 226 then return end
+        if (not Lib.Lang.IsDigit(c)) and c ~= "." and string.byte(c) ~= 226 then return end
         if c == "." and string.find(self.Value, "%.") then return end
         if string.byte(c) == 226 then
             if self.Value:sub(1,1) == "-" then

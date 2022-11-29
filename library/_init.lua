@@ -6,5 +6,6 @@ Lib = {
         MultiLineStr = {}
     },
     Internal = {},
+    Lang = {},
     Timeout = {}
 }

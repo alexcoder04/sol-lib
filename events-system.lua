@@ -10,11 +10,11 @@ function on.construction()
     math.randomseed(timer:getMilliSecCounter())
     timer.start(App.RefreshRate)
 
-    if Lib.Internal.IsRunnable(App.Interactions.Copy) then toolpalette.enableCopy(true) end
-    if Lib.Internal.IsRunnable(App.Interactions.Cut) then toolpalette.enableCut(true) end
-    if Lib.Internal.IsRunnable(App.Interactions.Paste) then toolpalette.enablePaste(true) end
+    if Lib.Lang.IsRunnable(App.Interactions.Copy) then toolpalette.enableCopy(true) end
+    if Lib.Lang.IsRunnable(App.Interactions.Cut) then toolpalette.enableCut(true) end
+    if Lib.Lang.IsRunnable(App.Interactions.Paste) then toolpalette.enablePaste(true) end
 
-    if Lib.Internal.IsRunnable(init) then
+    if Lib.Lang.IsRunnable(init) then
         init()
     end
 end
@@ -24,7 +24,7 @@ function on.paint(gc)
     App:_draw(gc)
 
     -- 2) hooks
-    if Lib.Internal.IsRunnable(App.Hooks.Paint) then
+    if Lib.Lang.IsRunnable(App.Hooks.Paint) then
         App.Hooks.Paint(gc)
     end
 
@@ -49,7 +49,7 @@ function on.resize()
 end
 
 function on.timer()
-    if Lib.Internal.IsRunnable(Lib.Timeout.Next) then
+    if Lib.Lang.IsRunnable(Lib.Timeout.Next) then
         Lib.Timeout.Next()
         Lib.Timeout.Next = nil
     end

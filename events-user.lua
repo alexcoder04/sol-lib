@@ -14,7 +14,7 @@ function on.enterKey()
         return
     end
     if App._focused == 0 then
-        if Lib.Internal.IsRunnable(App.Hooks.EnterKey) then
+        if Lib.Lang.IsRunnable(App.Hooks.EnterKey) then
             if App.Hooks.EnterKey(c) then
                 platform.window:invalidate()
             end
@@ -63,14 +63,14 @@ function on.charIn(c)
         return
     end
     if App._focused == 0 then
-        if Lib.Internal.IsRunnable(App.Hooks.CharIn) then
+        if Lib.Lang.IsRunnable(App.Hooks.CharIn) then
             if App.Hooks.CharIn(c) then
                 platform.window:invalidate()
             end
         end
         return
     end
-    if Lib.Internal.IsRunnable(App._elements[App._focused].AcceptChar) then
+    if Lib.Lang.IsRunnable(App._elements[App._focused].AcceptChar) then
         App._elements[App._focused]:AcceptChar(c)
         platform.window:invalidate()
     end
@@ -82,14 +82,14 @@ function on.backspaceKey()
         return
     end
     if App._focused == 0 then
-        if Lib.Internal.IsRunnable(App.Hooks.Backspace) then
+        if Lib.Lang.IsRunnable(App.Hooks.Backspace) then
             if App.Hooks.Backspace() then
                 platform.window:invalidate()
             end
         end
         return
     end
-    if Lib.Internal.IsRunnable(App._elements[App._focused].AcceptBackspace) then
+    if Lib.Lang.IsRunnable(App._elements[App._focused].AcceptBackspace) then
         App._elements[App._focused]:AcceptBackspace()
         platform.window:invalidate()
     end
@@ -100,19 +100,19 @@ function on.help()
 end
 
 function on.copy()
-    if Lib.Internal.IsRunnable(App.Interactions.Copy) then
+    if Lib.Lang.IsRunnable(App.Interactions.Copy) then
         clipboard.addText(App.Interactions.Copy())
     end
 end
 
 function on.cut()
-    if Lib.Internal.IsRunnable(App.Interactions.Cut) then
+    if Lib.Lang.IsRunnable(App.Interactions.Cut) then
         clipboard.addText(App.Interactions.Cut())
     end
 end
 
 function on.paste()
-    if Lib.Internal.IsRunnable(App.Interactions.Paste) then
+    if Lib.Lang.IsRunnable(App.Interactions.Paste) then
         App.Interactions.Paste(clipboard.getText())
     end
 end

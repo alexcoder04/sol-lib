@@ -30,7 +30,7 @@ end
 
 -- execute a function as if it is running on an element
 function App:ElementExec(id, callback)
-    if id > #(self._elements) or id < 1 or (not Lib.Internal.IsRunnable(callback)) then return end
+    if id > #(self._elements) or id < 1 or (not Lib.Lang.IsRunnable(callback)) then return end
     return callback(self._elements[id])
 end
 
@@ -88,7 +88,7 @@ end
 function App:_update()
     local redraw_required = false
     for i = 1, #(self._elements) do
-        if Lib.Internal.IsRunnable(self._elements[i].Update) then
+        if Lib.Lang.IsRunnable(self._elements[i].Update) then
             if self._elements[i]:Update() then
                 redraw_required = true
             end
@@ -100,7 +100,7 @@ end
 function App:_onMouseClick(x, y)
     for i = 1, #(self._elements) do
         if self._elements[i]:_touches(x, y) and (not self._elements[i].Hidden) then
-            if Lib.Internal.IsRunnable(self._elements[i].OnClick) then
+            if Lib.Lang.IsRunnable(self._elements[i].OnClick) then
                 self._elements[i]:OnClick()
             end
         end
@@ -109,7 +109,7 @@ end
 
 function App:_onElementClick()
     if self._focused == 0 then return end
-    if Lib.Internal.IsRunnable(self._elements[self._focused].OnClick) then
+    if Lib.Lang.IsRunnable(self._elements[self._focused].OnClick) then
         self._elements[self._focused]:OnClick()
     end
 end
